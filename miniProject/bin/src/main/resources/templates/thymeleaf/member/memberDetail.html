@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+[[${memberCommand.memberName }]]회원상세보기<br/>
+	회원번호 : [[${memberCommand.memberNum }]]<br/>
+	회원아이디 : [[${memberCommand.memberId }]]<br/>
+	회원명 : [[${memberCommand.memberName }]]<br/>
+	회원주소 : [[${memberCommand.memberAddr }]]<br/>
+	상세주소 : [[${memberCommand.memberAddrDetail }]]<br/>
+	우편번호 : [[${memberCommand.memberPost }]]<br/>
+	회원연락처1 : [[${memberCommand.memberPhone1 }]]<br/>
+	회원연락처2 : [[${memberCommand.memberPhone2 }]]<br/>
+	회원성별 : <span th:if="${memberCommand.gender =='M'}">남자</span>
+			<span th:if="${memberCommand.gender =='F'}">여자</span><br/>
+	회원 등록일 : [[${#dates.format(memberCommand.memberRegist, 'yyyy-MM-dd') }]]<br/>
+	회원생년월일 : [[${#dates.format(memberCommand.memberBirth, 'yyyy-MM-dd') }]]<br/>
+	회원이메일 : [[${memberCommand.memberEmail }]]<br/>
+	키 : [[${memberCommand.height }]]<br/>
+	몸무게 : [[${memberCommand.weight }]]<br/>
+	<a th:href="@{memberUpdate(memberNum=${memberCommand.memberNum })}|">회원 수정</a> | 
+	<a th:href="|memberDelete?memberNum=${memberCommand.memberNum }|">회원 삭제</a> | 
+	<a href="memberList">회원 목록</a> 
+</body>
+</html>

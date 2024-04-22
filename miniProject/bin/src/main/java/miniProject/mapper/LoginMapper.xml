@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//En" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miniProject.mapper.LoginMapper">
+<select id="loginSelect" parameterType="string" resultType="authInfo">
+	select MEMBER_ID userId, MEMBER_PW userPw, MEMBER_NAME userName, 'mem' grade, MEMBER_EMAIL userEmail, MEMBER_EMAIL_CONF userEmailCheck
+	from MEMBERS
+	where MEMBER_ID = #{userId}
+	union
+	select EMP_ID, EMP_PW, EMP_NAME, 'emp', EMP_EMAIL, 'Y'
+	from EMPLOYEES
+	where EMP_ID = #{userId}
+</select>
+</mapper>
