@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/static/js/daumAddressScript.js"></script>
+</head>
+<body>
+<form action="memberUpdate" method="post" enctype="multipart/form-data" id="frm">
+<input type="hidden" name="memberNum" th:value="${memberCommand.memberNum}"/>
+	회원 등록 페이지<br/>
+	프로필 <input type="file" name="goodsMainStore" th:value="${goodsCommand.goodsMainStore}"  class="form-control"/>
+	회원아이디 : <input type="text" name="memberId" id="userId" th:value="${memberCommand.memberId}"  /><br/>
+	회원명 : <input type="text" name="memberName" th:value="${memberCommand.memberName}"/><br/>
+	회원주소 : <input type="text" name="memberAddr"id="sample4_roadAddress" onclick="execDaumPostcode()" th:value="${memberCommand.memberAddr}" readonly="readonly"/><br/>
+	상세주소 : <input type="text" name="memberAddrDetail" th:value="${memberCommand.memberAddrDetail}" /><br/>
+	우편번호 : <input type="text" name="memberPost"  id="sample4_postcode" th:value="${memberCommand.memberPost}" readonly="readonly"/><br/>
+	회원연락처1 : <input type="tel" name="memberPhone1" th:value="${memberCommand.memberPhone1}"/><br/>
+	회원연락처2 : <input type="tel" name="memberPhone2"  th:value="${memberCommand.memberPhone2}"/><br/>
+	회원성별 : <input type="radio" name="gender" value="M" th:checked="${memberCommand.gender == 'M'}"/>남자
+			 <input type="radio" name="gender" value="F" th:checked="${memberCommand.gender == 'F'}"/>여자<br/>
+	회원생년월일 : <input type="date" name="memberBirth" th:value="${#dates.format(memberCommand.memberBirth, 'yyyy-MM-dd')}"/><br/>
+	회원이메일 : <input type="email" name="memberEmail" id="userEmail" th:value="${memberCommand.memberEmail}"/><br/>
+	키:		<select name="height" th:value="${memberCommand.height}">
+				<option>~150cm</option>
+				<option>150~157cm</option>
+				<option>155~162cm</option>
+				<option>160~167cm</option>
+				<option>165~172cm</option>
+				<option>170~177cm</option>
+				<option>175~182cm</option>
+				<option>180~187cm</option>
+				<option>185~192cm</option>
+				<option>192cm~</option>
+			</select><br/>
+	몸무게:	<select name="weight" th:value="${memberCommand.weight}">
+				<option>~45kg</option>
+				<option>45~50kg</option>
+				<option>50~55kg</option>
+				<option>55~60kg</option>
+				<option>60~65kg</option>
+				<option>65~70kg</option>
+				<option>70~75kg</option>
+				<option>75~80kg</option>
+				<option>80~85kg</option>
+				<option>85~90kg</option>
+				<option>90kg~</option>
+			</select><br/>
+	<input type="submit" value="회원수정"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<th:block th:if="${session.auth == null}">
+<a href="login/login">로그인</a>
+</th:block>
+<th:block th:if="${session.auth != null}">
+	<a href="login/logout">로그아웃</a>
+	<th:block th:if="${session.auth.grade == 'emp'}">
+		<a href="member/memberList">회원 정보</a>
+	</th:block>
+	<th:block th:if="${session.auth.grade == 'mem'}">
+		<a href="member/memberList">프로필</a>
+	</th:block>
+</th:block>
+</body>
+</html>
