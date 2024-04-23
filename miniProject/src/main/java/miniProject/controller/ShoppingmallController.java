@@ -15,4 +15,5 @@ public class ShoppingmallController {
 	public String goods() {
 		return "thymeleaf/goods/goodsInfo";
 	}
+	
 }

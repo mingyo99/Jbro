@@ -1,0 +1,7 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//En" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miniProject.mapper.PostsMapper">
+<insert id="postsInsert" parameterType="posts">
+	insert into POSTS(POSTS_NUM, MEMBER_NUM, POSTS_IMG, POSTS_IMG_IMG, POSTS_CONTENT, POSTS_DATE, POSTS_STYLE)
+	values(#{postsNum}, #{memberNum}, #{postsImg}, #{postsImgImg}, #{postsContent}, sysdate, #{postsStyle})
+</insert>
+</mapper>
