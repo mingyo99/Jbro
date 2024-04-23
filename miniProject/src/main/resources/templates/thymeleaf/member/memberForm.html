@@ -15,6 +15,12 @@
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </style>
 </head>
+<<<<<<< HEAD
+<body>
+<form action="memberRegist" method="post" id="frm">
+<input type="hidden" name="memberNum" th:value="${memberCommand.memberNum}"/>
+	회원 등록 페이지<br/>
+=======
 <body class="w3-content" style="max-width:1200px">
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
@@ -25,22 +31,22 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <!-- 왼쪽 카테고리바 -->
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
     <th:block th:if="${session.auth == null}">
-    <a href="login/login" class="w3-bar-item w3-button">로그인</a>
+    <a href="login" class="w3-bar-item w3-button">로그인</a>
     </th:block>
     
     <th:block th:if="${session.auth != null}">
-	<a href="login/logout">로그아웃</a>
+	<a href="logout">로그아웃</a>
 	<th:block th:if="${session.auth.grade == 'emp'}">
-		<a href="member/memberList">회원 정보</a>
+		<a href="/member/memberList">회원 정보</a>
 	</th:block>
 	<th:block th:if="${session.auth.grade == 'mem'}">
-		<a href="member/memberList">프로필</a>
+		<a href="/member/memberList">프로필</a>
 	</th:block>
 </th:block>
 
     <a href="" class="w3-bar-item w3-button">홈</a>
     <a href="" class="w3-bar-item w3-button">검색</a>
-    <a href="shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
+    <a href="/shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
     <a href="#" class="w3-bar-item w3-button">프로필</a>
     <a href="#" class="w3-bar-item w3-button">설정</a>
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">

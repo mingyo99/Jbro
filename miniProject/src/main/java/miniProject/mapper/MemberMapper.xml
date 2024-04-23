@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//En" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="miniProject.mapper.MemberMapper">
 <sql id="memberBaseColumns">
-	MEMBER_NUM memberNum, MEMBER_NAME memberName, MEMBER_ID memberId, MEMBER_ADDR memberAddr, MEMBER_ADDR_DETAIL memberAddrDetail, MEMBER_POST memberPost, MEMBER_REGIST memberRegist, GENDER gender, MEMBER_PHONE1 memberPhone1, MEMBER_PHONE2 memberPhone2, MEMBER_EMAIL memberEmail, MEMBER_BIRTH memberBirth, WEIGHT weight, HEIGHT height
+	MEMBER_NUM memberNum, MEMBER_NAME memberName, MEMBER_ID memberId, MEMBER_ADDR memberAddr, MEMBER_ADDR_DETAIL memberAddrDetail, MEMBER_POST memberPost, MEMBER_REGIST memberRegist, GENDER gender, MEMBER_PHONE1 memberPhone1, MEMBER_PHONE2 memberPhone2, MEMBER_EMAIL memberEmail, MEMBER_BIRTH memberBirth, WEIGHT weight, HEIGHT height, PROFILE_IMG profileImg, PROFILE_IMG_IMG profileImgImg
 </sql>
 <insert id="memberInsert" parameterType="member">
 	insert into MEMBERS(MEMBER_NUM, MEMBER_NAME, MEMBER_ID, MEMBER_PW, MEMBER_ADDR, MEMBER_ADDR_DETAIL, MEMBER_POST, MEMBER_REGIST, GENDER, MEMBER_PHONE1, MEMBER_PHONE2, MEMBER_EMAIL, MEMBER_BIRTH, WEIGHT, HEIGHT)
@@ -14,11 +14,11 @@
 <select id="memberSelectOne" parameterType="string" resultType="member">
 	select <include refid="memberBaseColumns"/>
 	from MEMBERS
-	where MEMBER_NUM = #{memberNum}
+	where MEMBER_NUM = #{memberNumOrId} or MEMBER_ID = #{memberNumOrId}
 </select>
 <update id="memberUpdate" parameterType="member">
 	update MEMBERS
-	set MEMBER_NAME = #{memberName}, MEMBER_ADDR = #{memberAddr}, MEMBER_ADDR_DETAIL = #{memberAddrDetail}, MEMBER_POST = #{memberPost}, GENDER = #{gender}, MEMBER_PHONE1 = #{memberPhone1}, MEMBER_PHONE2 = #{memberPhone2}, MEMBER_BIRTH = #{memberBirth}, WEIGHT = #{weight}, HEIGHT = #{height}
+	set MEMBER_NAME = #{memberName}, MEMBER_ADDR = #{memberAddr}, MEMBER_ADDR_DETAIL = #{memberAddrDetail}, MEMBER_POST = #{memberPost}, GENDER = #{gender}, MEMBER_PHONE1 = #{memberPhone1}, MEMBER_PHONE2 = #{memberPhone2}, MEMBER_BIRTH = #{memberBirth}, WEIGHT = #{weight}, HEIGHT = #{height}, PROFILE_IMG = #{profileImg}, PROFILE_IMG_IMG = #{profileImgImg}
 	where MEMBER_NUM = #{memberNum}
 </update>
 <delete id="memberDelete" parameterType="string">
