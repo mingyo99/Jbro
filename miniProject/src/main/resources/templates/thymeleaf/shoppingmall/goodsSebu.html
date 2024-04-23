@@ -23,31 +23,21 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </div>
   <!-- 왼쪽 카테고리바 -->
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-  <th:block th:if="${session.auth == null}">
-    <a href="/login/login" class="w3-bar-item w3-button">로그인</a>
-    </th:block>
-    
-    <th:block th:if="${session.auth != null}">
-	<a href="/login/logout">로그아웃</a>
-    <th:block th:if="${session.auth.grade == 'emp'}">
-    <a href="/goods/goodsForm">상품 등록</a>
-    </th:block>
-    </th:block>
-    <a href="/shoppingmall/top" class="w3-bar-item w3-button">상의</a>
-    <a href="/shoppingmall/outer" class="w3-bar-item w3-button">아우터</a>
+    <a href="#" class="w3-bar-item w3-button">상의</a>
+    <a href="#" class="w3-bar-item w3-button">아우터</a>
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
       바지 <i class="fa fa-caret-down"></i>
     </a>
     <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="/shoppingmall/jeans" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>청바지</a>
-      <a href="/shoppingmall/slacks" class="w3-bar-item w3-button">슬렉스</a>
-      <a href="/shoppingmall/shorts" class="w3-bar-item w3-button">반바지</a>
-      <a href="/shoppingmall/trainingPants" class="w3-bar-item w3-button">트레이닝바지</a>
+      <a href="#" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>청바지</a>
+      <a href="#" class="w3-bar-item w3-button">슬렉스</a>
+      <a href="#" class="w3-bar-item w3-button">반바지</a>
+      <a href="#" class="w3-bar-item w3-button">트레이닝바지</a>
     </div>
-    <a href="/shoppingmall/shoes" class="w3-bar-item w3-button">신발</a>
-    <a href="/shoppingmall/sports" class="w3-bar-item w3-button">스포츠웨어</a>
-    <a href="/shoppingmall/caps" class="w3-bar-item w3-button">모자</a>
-    <a href="/shoppingmall/etc" class="w3-bar-item w3-button">양말/안경/악세서리</a>
+    <a href="#" class="w3-bar-item w3-button">신발</a>
+    <a href="#" class="w3-bar-item w3-button">스포츠웨어</a>
+    <a href="#" class="w3-bar-item w3-button">모자</a>
+    <a href="#" class="w3-bar-item w3-button">양말/안경/악세서리</a>
   </div>
   <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
@@ -82,37 +72,38 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
   <!-- 메인 이미지 헤더 -->
   <div class="w3-display-container w3-container">
-    <img src="/static/images/fashion.jpg" alt="Jeans" style="width:80%;height:80vh">
+  <th:block th:each="goodsCommand, idx : ${dto}">
+     <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:30vh;height:40vh">
+    </th:block>
     <div class="w3-display-topleft w3-text-white" style="padding:16px 40px">
-      <h1 class="w3-jumbo w3-hide-small">숏팬츠의 계절</h1>
-      <h1 class="w3-hide-large w3-hide-medium">spring</h1>
-      <h1 class="w3-hide-small">FASHION 2024</h1>
-      <p><a href="#jeans" class="w3-button w3-black w3-padding-large w3-large">SHOP NOW</a></p>
     </div>
   </div>
-
-  <div class="w3-container w3-text-grey" id="jeans">
-    <p>??? 개의 상품</p>
-  </div>
-  <!-- 상품 나열 그리드 -->
   <div class="w3-row">
-   <th:block th:each="goodsCommand, idx : ${list}">
-    <div class="w3-col l3 s6">
-      <div class="w3-container" >
-        <a th:href="|/shoppingmall/goodsSebu?goodsNum=${goodsCommand.goodsNum}|">
-        <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:30vh;height:40vh"></a>
-        <p>[[${goodsCommand.goodsName}]]</p>
+  
+    <div class="w3-col l3 s6" style="width:100%">
+      <div class="w3-container">
+      <th:block th:each="goodsCommand, idx : ${dto}">
+        <p>상품명 : </p><b>[[${goodsCommand.goodsName }]]</b>
+        <p>상품가격 : </p><b>[[${goodsCommand.goodsPrice }]]</b>
+        <p>배송비 : </p><b>[[${goodsCommand.deliveryCost }]]</b>
+        <p>상품설명<p><!-- \n을 <br />로 변경합니다. -->
+        <span  th:utext="${#strings.replace(goodsCommand.goodsContent, newLine, '&lt;br /&gt;')}"></span>
+        
+          <p>조회수</p><b>[[${goodsCommand.visitCount }]]</b>
+            <p>상세이미지<p>
+	   	      <th:block th:each="image : ${#strings.arraySplit(goodsCommand.goodsImages,'/')}">
+		        <img th:src="@{'/static/upload/'+${image}}"/>
+		      </th:block>
+	    
+	
+        
+		  <a href="javascript:history.back();">뒤로가기</a>		
+		
+		</th:block>
       </div>
     </div>
-  	<th:block th:if="${idx.count % 3 == 0}" th:utext="'</div><div>'" />
-    </th:block>
   </div>
-
-  
-
-  <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">JBro</a></div>
-
-  <!-- End page content -->
+ 
 </div>
 
 <!-- Newsletter Modal -->

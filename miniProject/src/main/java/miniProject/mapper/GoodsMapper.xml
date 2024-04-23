@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miniProject.mapper.GoodsMapper">
+<sql id="goodsColumnsBase">
+	    GOODS_NUM, GOODS_NAME, GOODS_PRICE, GOODS_CONTENT, DELIVERY_COST, EMP_NUM, GOODS_REGIST,  GOODS_MAIN_STORE, GOODS_MAIN_STORE_IMG
+                    , GOODS_IMAGES, GOODS_IMAGES_IMG , VISIT_COUNT, UPDATE_EMP_NUM, GOODS_UPDATE_DATE
+</sql>
+<insert id="goodsInsert" parameterType="goods">
+insert into goods ( <include refid="goodsColumnsBase" /> )
+values(#{goodsNum}, #{goodsName}, #{goodsPrice}, #{goodsContent},#{deliveryCost},
+		#{empNum}, sysdate, #{goodsMainStore}, #{goodsMainStoreImg} 
+		<if test="goodsImages != null">
+			,#{goodsImages} , #{goodsImagesImg}
+		</if>
+		<if test="goodsImages == null">
+			,null,null
+		</if>	  	
+	  	,0,null,null)
+</insert>
+
+<!-- dto에 직접 넣어 가지고 오는 것이 아니라 setter를 이용해서 가져오겠습니다. -->
+<resultMap type="goods" id="goodsResultMap">
+	<constructor>
+		<idArg  column="goods_Num" javaType="string" jdbcType="VARCHAR"/>
+		<arg column="goods_Name" javaType="string" jdbcType="VARCHAR" />
+		<arg column="goods_Price" javaType="integer" jdbcType="BIGINT" />
+		<arg column="delivery_Cost" javaType="integer" jdbcType="BIGINT" />
+		<arg column="goods_Content" javaType="string" jdbcType="VARCHAR" />
+		<arg column="emp_Num" javaType="string" jdbcType="VARCHAR" />
+		<arg column="visit_Count" javaType="integer" jdbcType="BIGINT" />
+		<arg column="goods_Regist" javaType="java.util.Date" jdbcType="DATE" />
+		<arg column="update_Emp_Num" javaType="string" jdbcType="VARCHAR" />
+		<arg column="goods_Update_Date" javaType="java.util.Date" jdbcType="DATE" />
+		<arg column="goods_main_store" javaType="string" jdbcType="VARCHAR" />
+		<arg column="goods_main_store_img" javaType="string" jdbcType="VARCHAR" />
+		<arg column="goods_images" javaType="string" jdbcType="VARCHAR" />
+		<arg column="goods_images_img" javaType="string" jdbcType="VARCHAR" />
+	</constructor>
+</resultMap> 
+<select id="allSelect" resultMap="goodsResultMap">
+select * from (
+	select ROW_NUMBER() over (order by goods_num desc) as rn,
+			<include refid="goodsColumnsBase" />
+	from goods
+	<where>
+		<if test="searchWord != null">
+			goods_name like '%' || #{searchWord} || '%'
+			or goods_num like '%' || #{searchWord} || '%'
+		</if>
+	</where>
+)sub1
+where rn between #{startRow}  and #{endRow}
+</select>
+
+<select id="ShoppingmallallSelect" resultType="goods">
+select goods_Num goodsNum, goods_name goodsName, goods_price goodsPrice, goods_content goodsContent, delivery_cost deliveryCost, emp_num empNum  
+	  , goods_regist goodsRegist, goods_main_store goodsMainStore, goods_main_store_img goodsMainStoreImg 
+	  , goods_images goodsImages, goods_images_img goodsImagesImg 
+	  , visit_count visitCount, update_Emp_Num updateEmpNum, goods_Update_Date goodsUpdateDate
+from GOODS
+</select>
+
+<select id="goodsCount" parameterType="string" resultType="integer">
+	select count(*) from goods
+	<where>
+		<if test="searchWord != null">
+			goods_name like '%' || #{searchWord} || '%'
+			or goods_num like '%' || #{searchWord} || '%'
+		</if>
+	</where>
+</select>
+<delete id="productsDelete" parameterType="string">
+delete from goods <!-- foreach문을 사용해서 in연산자를 사용합니다. -->
+where goods_num in <foreach collection="products" item="goodsNum" open="(" close=")" index="index"
+					separator=",">
+						#{goodsNum}
+					</foreach>
+</delete>
+
+<select id="selectOne" parameterType="string" resultMap="goodsResultMap">
+select <include refid="goodsColumnsBase" />
+from goods  
+where goods_Num = #{goodsNum}
+</select>
+<update id="goodsUpdate" parameterType="goods"> 
+update goods
+set GOODS_NAME = #{goodsName}, GOODS_PRICE = #{goodsPrice}
+	,delivery_cost =#{deliveryCost}, GOODS_CONTENT = #{goodsContent}
+    ,update_emp_num = #{updateEmpNum}, goods_update_date = sysdate
+    <if test="goodsMainStore != null">
+    ,goods_main_store = #{goodsMainStore}
+	,goods_main_store_img = #{goodsMainStoreImg}
+    </if>
+    <if test="goodsImages != null">
+    ,goods_images = #{goodsImages}
+	,goods_images_img = #{goodsImagesImg}
+    </if>
+where goods_num = #{goodsNum}
+</update>
+<delete id="goodsDelete" parameterType="string">
+delete from goods
+where goods_num = #{goodsNum}
+</delete>
+<update id="visitCount" parameterType="string">
+	update goods
+	set visit_count = visit_count + 1
+	where goods_num = #{goodsNum}
+</update>
+<select id="goodsStockSelectOne" parameterType="string"
+    resultMap="goodsStockResultMap">
+select *
+from goods g left outer join (select i.goods_num, ipgo - nvl(release,0) stock
+        from (select goods_num, sum(IPGO_QTY) ipgo
+               from goodsipgo
+               group by goods_num) i left outer join (select goods_num, sum(purchase_QTY) release
+                                         from purchase_list
+                                         group by goods_num) r
+               on i.goods_num = r.goods_num) s
+        on g.goods_num = s.goods_num
+where g.goods_num = #{goodsNum}
+</select>
+<resultMap type="goodsStock" id="goodsStockResultMap">
+    <result column="stock" jdbcType="BIGINT" property="stock" />
+    <association property="goodsDTO" javaType="goods" resultMap="goodsResultMap" />
+</resultMap>
+</mapper>
+
+
+
+
+
+
+
+
+
