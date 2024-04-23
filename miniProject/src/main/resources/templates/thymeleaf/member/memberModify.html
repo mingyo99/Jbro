@@ -10,7 +10,7 @@
 <form action="memberUpdate" method="post" enctype="multipart/form-data" id="frm">
 <input type="hidden" name="memberNum" th:value="${memberCommand.memberNum}"/>
 	회원 등록 페이지<br/>
-	프로필 : <input type="file" name="profileImg" th:value="${memberCommand.profileImg}"  class="form-control"/><br/>
+	프로필 : <input type="file" name="profileImg" th:value="${memberCommand.profileImg}" /><br/>
 	회원아이디 : <input type="text" name="memberId" id="userId" th:value="${memberCommand.memberId}"  /><br/>
 	회원명 : <input type="text" name="memberName" th:value="${memberCommand.memberName}"/><br/>
 	회원주소 : <input type="text" name="memberAddr"id="sample4_roadAddress" onclick="execDaumPostcode()" th:value="${memberCommand.memberAddr}" readonly="readonly"/><br/>

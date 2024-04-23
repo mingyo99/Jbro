@@ -14,7 +14,7 @@
 <select id="memberSelectOne" parameterType="string" resultType="member">
 	select <include refid="memberBaseColumns"/>
 	from MEMBERS
-	where MEMBER_NUM = #{memberNum}
+	where MEMBER_NUM = #{memberNumOrId} or MEMBER_ID = #{memberNumOrId}
 </select>
 <update id="memberUpdate" parameterType="member">
 	update MEMBERS

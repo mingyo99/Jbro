@@ -10,7 +10,7 @@ import miniProject.domain.MemberDTO;
 public interface MemberMapper {
 	public void memberInsert(MemberDTO dto);
 	public List<MemberDTO> memberSelectList();
-	public MemberDTO memberSelectOne(String memberNum);
+	public MemberDTO memberSelectOne(String memberNumOrId);
 	public void memberUpdate(MemberDTO dto);
 	public void memberDelete(String memberNum);
 }
