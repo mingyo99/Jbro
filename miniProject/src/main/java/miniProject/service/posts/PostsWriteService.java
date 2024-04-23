@@ -33,21 +33,25 @@ public class PostsWriteService {
 		
 		URL resource = getClass().getClassLoader().getResource("static/upload");
 		System.out.println(resource);
-		String filrDir = "C:\\dev\\src5\\miniProject\\target\\classes\\static\\upload";
-		MultipartFile mf = postsCommand.getPostsImg();
-		String originalFile = mf.getOriginalFilename();
-		String extension = originalFile.substring(originalFile.lastIndexOf("."));
-		String storeName = UUID.randomUUID().toString().replace("-", "");
-		String storeFileName = storeName + extension;
-		File file = new File(filrDir+"/"+storeFileName);
-		try {
-			mf.transferTo(file);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		
-		dto.setPostsImg(storeFileName);
-		dto.setPostsImgImg(originalFile);
+		String filrDir = resource.getFile();
+		String originalTotal = "";
+		String storeTotal = "";
+		for (MultipartFile mf : postsCommand.getPostsImg()) {
+			String originalFile = mf.getOriginalFilename();
+			String extension = originalFile.substring(originalFile.lastIndexOf("."));
+			String storeName = UUID.randomUUID().toString().replace("-", "");
+			String storeFileName = storeName + extension;
+			File file = new File(filrDir+"/"+storeFileName);
+			try {
+				mf.transferTo(file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			originalTotal += originalFile + "/";
+			storeTotal += storeFileName + "/";	
+		}
+		dto.setPostsImg(storeTotal);
+		dto.setPostsImgImg(originalTotal);
 		postsMapper.postsInsert(dto);
 	}
 }

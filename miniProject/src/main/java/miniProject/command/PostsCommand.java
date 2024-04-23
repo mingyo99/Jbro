@@ -10,7 +10,7 @@ import lombok.Data;
 public class PostsCommand {
 	String postsNum;
 	String memberNum;
-	MultipartFile postsImg;
+	MultipartFile postsImg[];
 	String postsContent;
 	Date postsdate;
 	String postsStyle;

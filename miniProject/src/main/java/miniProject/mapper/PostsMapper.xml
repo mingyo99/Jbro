@@ -1,7 +1,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//En" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="miniProject.mapper.PostsMapper">
+<sql id="postsBaseColumn">
+	POSTS_NUM postsNum, MEMBER_NUM memberNum, POSTS_IMG postsImg, POSTS_IMG_IMG postsImgImg, POSTS_CONTENT postsContent, POSTS_DATE postsDate, POSTS_STYLE postsStyle
+</sql>
 <insert id="postsInsert" parameterType="posts">
 	insert into POSTS(POSTS_NUM, MEMBER_NUM, POSTS_IMG, POSTS_IMG_IMG, POSTS_CONTENT, POSTS_DATE, POSTS_STYLE)
 	values(#{postsNum}, #{memberNum}, #{postsImg}, #{postsImgImg}, #{postsContent}, sysdate, #{postsStyle})
 </insert>
+<select id="postsSelectList" parameterType="string" resultType="posts">
+	select <include refid="postsBaseColumn"/> from POSTS where MEMBER_NUM = #{memberNum}
+</select>
+<select id="postsSelectOne" parameterType="string" resultType="posts">
+	select <include refid="postsBaseColumn"/> from POSTS where POSTS_NUM = #{postsNum}
+</select>
+<update id="postsUpdate" parameterType="posts">
+	update POSTS
+	set POSTS_NUM = #{postsNum}, MEMBER_NUM = #{memberNum}, POSTS_CONTENT = #{postsContent}, POSTS_STYLE = #{postsStyle}
+</update>
+<delete id="postsDelete" parameterType="string">
+	delete from POSTS where POSTS_NUM = #{postsNum}
+</delete>
 </mapper>
