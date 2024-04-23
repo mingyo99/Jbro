@@ -23,6 +23,16 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </div>
   <!-- 왼쪽 카테고리바 -->
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+  <th:block th:if="${session.auth == null}">
+    <a href="/login/login" class="w3-bar-item w3-button">로그인</a>
+    </th:block>
+    
+    <th:block th:if="${session.auth != null}">
+	<a href="/login/logout">로그아웃</a>
+    <th:block th:if="${session.auth.grade == 'emp'}">
+    <a href="/goods/goodsForm">상품 등록</a>
+    </th:block>
+    </th:block>
     <a href="#" class="w3-bar-item w3-button">상의</a>
     <a href="#" class="w3-bar-item w3-button">아우터</a>
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">

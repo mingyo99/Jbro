@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>J_BRO</title>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
@@ -23,38 +22,48 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </div>
   <!-- 왼쪽 카테고리바 -->
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+      
     <th:block th:if="${session.auth == null}">
-    <a href="/login/login" class="w3-bar-item w3-button">로그인</a>
+    <a href="login/login" class="w3-bar-item w3-button">로그인</a>
     </th:block>
     
     <th:block th:if="${session.auth != null}">
-		<a href="/login/logout">로그아웃</a>
-		<th:block th:if="${session.auth.grade == 'emp'}">
-			<a href="/member/memberList">회원 정보</a>
-		</th:block>
-		<th:block th:if="${session.auth.grade == 'mem'}">
-			<a href="/member/memberList">프로필</a>
-		</th:block>
-		
+	<a href="login/logout">로그아웃</a>
+	<th:block th:if="${session.auth.grade == 'emp'}">
+		<a href="member/memberList">회원 정보</a>
+		<a href="" class="w3-bar-item w3-button">홈</a>
+        <a href="" class="w3-bar-item w3-button">검색</a>
+        <a href="shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
+		<a href="#" class="w3-bar-item w3-button">프로필</a>
+        <a href="#" class="w3-bar-item w3-button">설정</a>
+        <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+          더보기 <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+          <a href="#" class="w3-bar-item w3-button">회원 및 직원관리</a>
+          <a href="#" class="w3-bar-item w3-button">문의 관리</a>
+          <a href="#" class="w3-bar-item w3-button">배송 관리</a>
+        </div>
 	</th:block>
-    <a href="" class="w3-bar-item w3-button">홈</a>
-    <a href="" class="w3-bar-item w3-button">검색</a>
-    <a href="shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
-    <th:block th:if="${session.auth == null}">
-		<a id="profile" class="w3-bar-item w3-button">프로필</a>
+	<th:block th:if="${session.auth.grade == 'mem'}">
+		<a href="member/memberList">프로필</a>
+		<a href="" class="w3-bar-item w3-button">홈</a>
+        <a href="" class="w3-bar-item w3-button">검색</a>
+        <a href="shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
+		<a href="#" class="w3-bar-item w3-button">프로필</a>
+        <a href="#" class="w3-bar-item w3-button">설정</a>
+        <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+          더보기 <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+          <a href="#" class="w3-bar-item w3-button">찜한상품</a>
+          <a href="#" class="w3-bar-item w3-button">장바구니</a>
+          <a href="#" class="w3-bar-item w3-button">주문내역</a>
+        </div>
 	</th:block>
-	<th:block th:if="${session.auth != null}">
-		<a href="/posts/postsList" class="w3-bar-item w3-button">프로필</a>
-	</th:block>
-    <a href="#" class="w3-bar-item w3-button">설정</a>
-    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      더보기 <i class="fa fa-caret-down"></i>
-    </a>
-    <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button">찜한상품</a>
-      <a href="#" class="w3-bar-item w3-button">장바구니</a>
-      <a href="#" class="w3-bar-item w3-button">주문내역</a>
-    </div>
+</th:block>
+
+    
   </div>
   <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
@@ -191,11 +200,6 @@ function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
   document.getElementById("myOverlay").style.display = "none";
 }
-
-$("#profile").click(function(){		
-	alert("로그인이 필요한 서비스입니다.\n로그인해주세요.");
-	location.href="/login/login";
-});		
 </script>
 </body>
 </html>
