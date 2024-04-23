@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="postsUpdate" method="post">
+<input type="hidden" name="postsNum" th:value="${postsCommand.postsNum}">
+	내용 : <textarea rows="10" cols="70" name="postsContent">[[${postsCommand.postsContent}]]</textarea><br/>
+	스타일 : <select name="postsStyle"  >
+				<option th:selected="${postsCommand.postsStyle == '1'}">1</option>
+				<option th:selected="${postsCommand.postsStyle == '2'}">2</option>
+				<option th:selected="${postsCommand.postsStyle == '3'}">3</option>
+				<option th:selected="${postsCommand.postsStyle == '4'}">4</option>
+			</select><br/>
+	<input type="submit" value="수정"/>
+</form>
+</body>
+</html>
