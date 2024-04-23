@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>J_BRO</title>
+</head>
+<body>
+ 	이름 : [[${postsCommand.memberNum}]]<br/>
+ 	<th:block th:each="image : ${#strings.arraySplit(postsCommand.postsImg, '/')}">
+ 		<img th:src="|/static/upload/${image}|" style="width:30vh;height:40vh"><br/>
+ 	</th:block>
+ 	내용 : [[${postsCommand.postsContent}]]<br/>
+ 	스타일 : [[${postsCommand.postsStyle}]]<br/>
+ 	<a th:href="@{postsUpdate(postsNum=${postsCommand.postsNum })}|">게시물 수정</a> | 
+	<a th:href="|postsDelete?postsNum=${postsCommand.postsNum }|">게시물 삭제</a> 
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>J_BRO</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+</style>
+</head>
+<body>
+<!-- 상품 나열 그리드 -->
+<button type="button" onclick="location.href='postsWrite'">글 작성</button>
+  <div class="w3-row">
+   <th:block th:each="postsCommand, idx : ${list}">
+    <div class="w3-col l3 s6">
+      <div class="w3-container" >
+        <a th:href="|postsDetail?postsNum=${postsCommand.postsNum}|">
+        <img th:src="|/static/upload/${#strings.arraySplit(postsCommand.postsImg, '/')[0]}|" style="width:30vh;height:40vh"></a>
+        <p>[[${postsCommand.memberNum}]]</p>
+      </div>
+    </div>
+    <th:block th:if="${idx.count % 3 == 0}" th:utext="'</div><div>'" />
+    </th:block>
+  </div>
+</body>
+</html>
