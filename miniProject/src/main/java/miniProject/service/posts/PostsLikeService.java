@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import jakarta.servlet.http.HttpSession;
 import miniProject.domain.AuthInfoDTO;
@@ -18,22 +19,30 @@ public class PostsLikeService {
 	MemberMapper memberMapper;
 	@Autowired
 	LikeMapper likeMapper;
-	public String execute(String postsNum, HttpSession session) {
+	public Map<String, String> execute(String postsNum, HttpSession session) {
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
 		MemberDTO dto = memberMapper.memberSelectOne(auth.getUserId());
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		
 		if(dto == null) {
-			return "900";
+			map.put("likeCount", "900");
 		}else {
 			likeMapper.likeAddDel(postsNum, dto.getMemberNum());
-			Map<String, String> map = new HashMap<String, String>();
+			
 			map.put("postsNum", postsNum);
 			map.put("memberNum", dto.getMemberNum());
+			
 			int likeCount = likeMapper.likeCountSelectOne(map);
 			if(likeCount == 1) {
-				return "1";
+				map.put("likeCount", "1");
 			}else {
-				return "0";
+				map.put("likeCount", "0");
 			}
 		}
+		String allLikeCount = likeMapper.likeCountSelectAll(postsNum).toString();
+		map.put("allLikeCount", allLikeCount);
+		return map;
 	}
 }

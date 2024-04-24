@@ -27,7 +27,7 @@ public class PostsDetailService {
 		PostsDTO dto = postsMapper.postsSelectOne(postsNum);
 		model.addAttribute("postsCommand", dto);
 		
-		int allLikeCount = likeMapper.likeCountSelectAll(postsNum);
+		String allLikeCount = likeMapper.likeCountSelectAll(postsNum).toString();
 		model.addAttribute("allLikeCount", allLikeCount);
 		
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");

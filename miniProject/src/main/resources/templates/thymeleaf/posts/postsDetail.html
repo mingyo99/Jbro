@@ -10,16 +10,19 @@ $(function(){
 		 $.ajax({
 			type:"post",
 			url:"/item/postslikeAddDel",
-			dataType:"text",
 			data:{"postsNum":"[[${postsCommand.postsNum }]]"},
 			success:function(result){ //1:추가 0:삭제 900:관리자 로그인
-				if(result == "1"){
+				console.log(result);
+				console.log("result.allLikeCount : " + result.allLikeCount );
+				console.log("result.likeCount : " + result.likeCount );
+				if(result.likeCount == "1"){
 					$("#like").attr("src","/static/images/hrt1.jpg");
-				}else if(result == "0"){
+				}else if(result.likeCount == "0"){
 					$("#like").attr("src","/static/images/hrt.jpg");
-				}else if(result == 900){
+				}else if(result.likeCount == "900"){
 					alert("관리자는 사용할 수 없는 서비스입니다.");
 				}
+				$("#allLikeCount").text(result.allLikeCount);
 			},
 			error:function(){
 				alert("로그인이 필요합니다.\n로그인해주세요.");
@@ -37,7 +40,7 @@ $(function(){
  	</th:block>
  	<img th:if="${like == 1}" src="/static/images/hrt1.jpg" id="like" width="20"/>
  	<img th:if="${like != 1}" src="/static/images/hrt.jpg" id="like" width="20"/>
- 	[[${allLikeCount}]]<br/>
+ 	<span id="allLikeCount">[[${allLikeCount}]]</span><br/>
  	내용 : [[${postsCommand.postsContent}]]<br/>
  	스타일 : [[${postsCommand.postsStyle}]]<br/>
  	<th:block th:if="${session.auth != null}">

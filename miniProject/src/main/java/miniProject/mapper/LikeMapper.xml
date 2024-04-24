@@ -3,7 +3,7 @@
 <update id="likeAddDel">
 	merge into LIKES l
 	using (select POSTS_NUM from POSTS where POSTS_NUM = #{postsNum}) p
-	on (l.POSTS_NUM = p.POSTS_NUM)
+	on (l.POSTS_NUM = p.POSTS_NUM and MEMBER_NUM = #{memberNum})
 	WHEN MATCHED THEN
 		update set LIKE_DATE = sysdate
 		delete where MEMBER_NUM = #{memberNum} and POSTS_NUM = #{postsNum}
