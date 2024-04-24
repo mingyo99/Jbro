@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 import miniProject.command.PostsCommand;
+import miniProject.service.posts.PostsAutoNumService;
 import miniProject.service.posts.PostsDeleteService;
 import miniProject.service.posts.PostsDetailService;
 import miniProject.service.posts.PostsListService;
@@ -28,13 +29,16 @@ public class PostsController {
 	PostsUpdateService postsUpdateService;
 	@Autowired
 	PostsDeleteService postsDeleteService;
+	@Autowired
+	PostsAutoNumService postsAutoNumService;
 	@GetMapping("postsList")
 	public String profile(HttpSession session, Model model) {
 		postsListService.execute(session, model);
 		return "thymeleaf/posts/postsList";
 	}
 	@GetMapping("postsWrite")
-	public String profileWrite() {
+	public String profileWrite(PostsCommand postsCommand, Model model) {
+		postsAutoNumService.execute(postsCommand, model);
 		return "thymeleaf/posts/postsForm";
 	}
 	@PostMapping("postsRegist")
@@ -43,13 +47,13 @@ public class PostsController {
 		return "redirect:postsList";
 	}
 	@GetMapping("postsDetail")
-	public String postsDetail(String postsNum, Model model) {
-		postsDetailService.execute(postsNum, model);
+	public String postsDetail(String postsNum, Model model, HttpSession session) {
+		postsDetailService.execute(postsNum, model, session);
 		return "thymeleaf/posts/postsDetail";
 	}
 	@GetMapping("postsUpdate")
-	public String postsUpdate(String postsNum, Model model) {
-		postsDetailService.execute(postsNum, model);
+	public String postsUpdate(String postsNum, Model model, HttpSession session) {
+		postsDetailService.execute(postsNum, model, session);
 		return "thymeleaf/posts/postsModify";
 	}
 	@PostMapping("postsUpdate")

@@ -20,4 +20,7 @@
 <delete id="postsDelete" parameterType="string">
 	delete from POSTS where POSTS_NUM = #{postsNum}
 </delete>
+<select id="postsAllSelectList" resultType="posts">
+	select <include refid="postsBaseColumn"/> from POSTS
+</select>
 </mapper>

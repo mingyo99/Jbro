@@ -1,0 +1,20 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//En" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miniProject.mapper.LikeMapper">
+<update id="likeAddDel">
+	merge into LIKES l
+	using (select POSTS_NUM from POSTS where POSTS_NUM = #{postsNum}) p
+	on (l.POSTS_NUM = p.POSTS_NUM)
+	WHEN MATCHED THEN
+		update set LIKE_DATE = sysdate
+		delete where MEMBER_NUM = #{memberNum} and POSTS_NUM = #{postsNum}
+	WHEN NOT MATCHED THEN
+		insert(POSTS_NUM, MEMBER_NUM, LIKE_DATE)
+		values(#{postsNum}, #{memberNum}, sysdate)
+</update>
+<select id="likeCountSelectOne" parameterType="java.util.Map" resultType="integer">
+	select count(*) from LIKES where MEMBER_NUM = #{memberNum} and POSTS_NUM = #{postsNum}
+</select>
+<select id="likeCountSelectAll" parameterType="string" resultType="integer">
+	select count(*) from LIKES where POSTS_NUM = #{postsNum}
+</select>
+</mapper>
