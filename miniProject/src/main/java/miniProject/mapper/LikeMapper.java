@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Param;
 public interface LikeMapper {
 	public void likeAddDel(@Param("postsNum") String postsNum, @Param("memberNum") String memberNum);
 	public int likeCountSelectOne(Map<String, String> map);
-	public int likeCountSelectAll(String postsNum);
+	public Integer likeCountSelectAll(String postsNum);
 }
