@@ -13,6 +13,7 @@ import miniProject.service.posts.PostsLikeService;
 public class ItemRestController {
 	@Autowired
 	PostsLikeService postsLikeService;
+	
 	@PostMapping("postslikeAddDel")
 	public String postslikeAddDel(String postsNum, HttpSession session) {
 		return postsLikeService.execute(postsNum, session);
