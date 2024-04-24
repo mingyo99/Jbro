@@ -104,55 +104,16 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
   <!-- 상품 나열 그리드 -->
   <div class="w3-row">
+   <th:block th:each="postsCommand, idx : ${list}">
     <div class="w3-col l3 s6">
-      <div class="w3-container">
-        <a href="asd"><img src="/static/images/손나은1.jpg" style="width:30vh;height:40vh"></a>
-        <p>계정명</p>
-      </div>
-      <div class="w3-container">
-        <a href="asd"><img src="/static/images/사나1.jpg" style="width:30vh;height:40vh"></a>
-        <p>계정명</p>
+      <div class="w3-container" >
+        <a th:href="|/posts/postsDetail?postsNum=${postsCommand.postsNum}&memberNum=${postsCommand.memberNum}|">
+        <img th:src="|/static/upload/${#strings.arraySplit(postsCommand.postsImg, '/')[0]}|" style="width:30vh;height:40vh"></a>
+        <p>[[${postsCommand.memberNum}]]</p>
       </div>
     </div>
-
-    <div class="w3-col l3 s6">
-      <div class="w3-container">
-        <div class="w3-display-container">
-          <a href="asd"><img src="/static/images/아이린4.jpg" style="width:30vh;height:40vh"></a>
-          <span class="w3-tag w3-display-topleft">Hot</span>
-        </div>
-        <p>계정명</p>
-      </div>
-      <div class="w3-container">
-        <a href="asd"><img src="/static/images/아이린2.jpg" style="width:30vh;height:40vh"></a>
-        <p>계정명</p>
-      </div>
-    </div>
-
-    <div class="w3-col l3 s6">
-      <div class="w3-container">
-        <a href="asd"><img src="/static/images/원영4.jpg" style="width:30vh;height:40vh"></a>
-        <p>계정명</p>
-      </div>
-      <div class="w3-container">
-        <div class="w3-display-container">
-          <a href="asd"><img src="/static/images/채원2.jpg" style="width:30vh;height:40vh"></a>
-          <span class="w3-tag w3-display-topleft">Hot</span>
-        </div>
-        <p>계정명</p>
-      </div>
-    </div>
-
-    <div class="w3-col l3 s6">
-      <div class="w3-container">
-        <a href="asdasd"><img src="/static/images/채원.png" style="width:30vh;height:40vh"></a>
-        <p>계정명</p>
-      </div>
-      <div class="w3-container">
-        <a href="asd"><img src="/static/images/카리나2.jpg" style="width:30vh;height:40vh"></a>
-        <p>계정명</p>
-      </div>
-    </div>
+    <th:block th:if="${idx.count % 4 == 0}" th:utext="'</div><div>'" />
+    </th:block>
   </div>
 
   

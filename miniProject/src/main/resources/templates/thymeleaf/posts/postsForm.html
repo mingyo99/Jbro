@@ -7,7 +7,7 @@
 <body>
 <form action="postsRegist" method="post" enctype="multipart/form-data" id="frm">
 	회원 등록 페이지<br/>
-	번호 : <input type="text" name="postsNum">
+<input type="hidden" name="postsNum" th:value="${postsCommand.postsNum}">
 	사진 : <input type="file" multiple="multiple" name="postsImg"  /><br/>
 	내용 : <textarea rows="10" cols="70" name="postsContent"></textarea><br/>
 	스타일 : <select name="postsStyle" >
