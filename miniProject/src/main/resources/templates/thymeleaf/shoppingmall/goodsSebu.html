@@ -14,7 +14,14 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </style>
 
 </head>
-
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#wish").click(function(){
+		
+	});
+});
+</script>
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
@@ -77,11 +84,12 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <div class="w3-display-container w3-container">
   <th:block th:each="goodsCommand, idx : ${dto}">
      <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:60vh;height:80vh">
-    </th:block>
-    <p><b>남은 수량 : or 품절</b></p>
-    <p><b><button type="button" id="cartBtn">장바구니</button>
-          <button type="button" id="buyNow">바로구매</button></b></p>
-
+    <p><b><button type="button" id="cartBtn" th:attr="onclick=|javascript:location.href='/wish/wishList?goodsNum=${goodsCommand.goodsNum }'|">장바구니</button>
+          <button type="button" id="buyNow">바로구매</button>
+          
+          <img th:if="${wish == 1}" src="/static/images/hrt1.jpg" id="wish" width="20" />
+ 		  <img th:if="${wish != 1}" src="/static/images/hrt.jpg" id="wish" width="20" /> 찜</b></p>
+ </th:block>
   </div>
   <div class="w3-row">
   
@@ -100,8 +108,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	   	      <th:block th:each="image : ${#strings.arraySplit(goodsCommand.goodsImages,'/')}">
 		        <img th:src="@{'/static/upload/'+${image}}" style="width:60vh; height:80vh"/>
 		      </th:block>
-	    
-	
           <br>
 		  <a href="javascript:history.back();">뒤로가기</a>		
 		

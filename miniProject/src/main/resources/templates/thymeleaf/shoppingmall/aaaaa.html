@@ -23,21 +23,22 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </div>
   <!-- 왼쪽 카테고리바 -->
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-    <a href="#" class="w3-bar-item w3-button">상의</a>
-    <a href="#" class="w3-bar-item w3-button">아우터</a>
+    <a href="/shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">홈</a>
+    <a href="/shoppingmall/top" class="w3-bar-item w3-button">상의</a>
+    <a href="/shoppingmall/outer" class="w3-bar-item w3-button">아우터</a>
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
       바지 <i class="fa fa-caret-down"></i>
     </a>
     <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>청바지</a>
-      <a href="#" class="w3-bar-item w3-button">슬렉스</a>
-      <a href="#" class="w3-bar-item w3-button">반바지</a>
-      <a href="#" class="w3-bar-item w3-button">트레이닝바지</a>
+      <a href="/shoppingmall/jeans" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>청바지</a>
+      <a href="/shoppingmall/slacks" class="w3-bar-item w3-button">슬렉스</a>
+      <a href="/shoppingmall/shorts" class="w3-bar-item w3-button">반바지</a>
+      <a href="/shoppingmall/trainingPants" class="w3-bar-item w3-button">트레이닝바지</a>
     </div>
-    <a href="#" class="w3-bar-item w3-button">신발</a>
-    <a href="#" class="w3-bar-item w3-button">스포츠웨어</a>
-    <a href="#" class="w3-bar-item w3-button">모자</a>
-    <a href="#" class="w3-bar-item w3-button">양말/안경/악세서리</a>
+    <a href="/shoppingmall/shoes" class="w3-bar-item w3-button">신발</a>
+    <a href="/shoppingmall/sports" class="w3-bar-item w3-button">스포츠웨어</a>
+    <a href="/shoppingmall/caps" class="w3-bar-item w3-button">모자</a>
+    <a href="/shoppingmall/etc" class="w3-bar-item w3-button">양말/안경/악세서리</a>
   </div>
   <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
@@ -89,8 +90,15 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <div class="w3-row">
     <div class="w3-col l3 s6">
       <div class="w3-container">
-      <a href="asd"><img src="/static/images/손나은.jpg" style="width:30vh;height:40vh"></a>
-        <p>상품명1<br><b>$가격</b></p>
+      <th:block th:each="goodsCommand, idx : ${dto}">
+	   	      <th:block th:each="image : ${#strings.arraySplit(goodsCommand.goodsImages,'/')}">
+		        <img th:src="@{'/static/upload/'+${image}}" style="width:60vh; height:80vh"/>
+		      </th:block>
+        <p>상품명 : <b>[[${goodsCommand.goodsName }]]</b></p>
+        <p>상품가격 : <b>[[${goodsCommand.goodsPrice }]]</b></p>
+            
+          <br>
+          </th:block>
       </div>
       <div class="w3-container">
         <a href="asd"><img src="/static/images/손나은1.jpg" style="width:30vh;height:40vh"></a>

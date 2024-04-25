@@ -12,38 +12,7 @@
 .w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </style>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	 $("#cartBtn").click(function(){
-	      var xhr = new XMLHttpRequest();
-	      xhr.open("POST", "/item/cartAdd", true);
-	      xhr.setRequestHeader("Content-Type", "application/json");
-	      xhr.onload = function(){
-	         if(xhr.status === 200){
-	            if(xhr.responseText == "200"){
-	               if(confirm("장바구니로 가시겠습니까?"))location.href="/item/cartList";
-	            }else if(xhr.responseText == "900"){
-	               alert("관리자는 사용할 수 없는 페이지입니다.");
-	            }else if(xhr.responseText == "000"){
-	               alert("로그아웃 되었습니다.\n다시 로그인해주세요.");
-	               window.open("/login/item.login", "login", "width=400, height=300, top=100, left=100");
-	            }
-	         }else{
-	            alert("로그아웃 되었습니다.\n다시 로그인해주세요.");
-	            window.open("/login/item.login", "login", "width=400, height=300, top=100, left=100");
-	         }
-	      }
-	      var formData = JSON.stringify({
-	         goodsNum:"[[${goodsStockCommand.goodsDTO.goodsNum}]]",
-	         qty:$("#cartQty").val()
-	      })
-	      xhr.send(formData);
-	   });
-});
-</script>
 </head>
-
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
@@ -102,44 +71,34 @@ $(function(){
     </p>
   </header>
 
-  <!-- 메인 이미지 헤더 -->
-  <div class="w3-display-container w3-container">
-  <th:block th:each="goodsCommand, idx : ${dto}">
-     <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:60vh;height:80vh">
-    </th:block>
-    <p><b>남은 수량 : or 품절</b></p>
-    <p><b><button type="button" id="cartBtn">장바구니</button>
-          <button type="button" id="buyNow">바로구매</button>
-          <img src="static/images/hrt.jpg">찜</b></p>
 
+
+  <div class="w3-container w3-text-grey" id="jeans">
+    <p>나의 위시리스트</p>
   </div>
+
+  <!-- 상품 나열 그리드 -->
   <div class="w3-row">
-  
-    <div class="w3-col l3 s6" style="width:100%">
+    <div class="w3-col l3 s6">
       <div class="w3-container">
-      <th:block th:each="goodsCommand, idx : ${dto}">
-        <p>상품명 : <b>[[${goodsCommand.goodsName }]]</b></p>
-        <p>상품가격 : <b>[[${goodsCommand.goodsPrice }]]</b></p>
-        <p>배송비 : <b>[[${goodsCommand.deliveryCost }]]</b></p>
-        
-        
-          <p>조회수 : <b>[[${goodsCommand.visitCount }]]</b></p>
-          <p>상품설명 : <!-- \n을 <br />로 변경합니다. -->
-          <span  th:utext="${#strings.replace(goodsCommand.goodsContent, newLine, '&lt;br /&gt;')}"></span></p>
-            <p>상세이미지<p>
-	   	      <th:block th:each="image : ${#strings.arraySplit(goodsCommand.goodsImages,'/')}">
-		        <img th:src="@{'/static/upload/'+${image}}" style="width:60vh; height:80vh"/>
-		      </th:block>
-	    
-	
-          <br>
-		  <a href="javascript:history.back();">뒤로가기</a>		
-		
-		</th:block>
+          <th:block th:each="goodsCommand, idx : ${dto}">
+              <a href="asd"><img src="/static/images/손나은.jpg" style="width:30vh;height:40vh"></a>
+              <p>상품명 : <b>[[${goodsCommand.goodsName }]]</b></p>
+              <p>상품가격 : <b>[[${goodsCommand.goodsPrice }]]</b></p>
+          </th:block>
       </div>
-    </div>
+      <div class="w3-container">
+        <a href="asd"><img src="/static/images/손나은1.jpg" style="width:30vh;height:40vh"></a>
+        <p>상품명2<br><b>$가격</b></p>
+      </div>
+    </div> 
   </div>
- 
+
+  
+
+  <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
+
+  <!-- End page content -->
 </div>
 
 <!-- Newsletter Modal -->
@@ -154,7 +113,6 @@ $(function(){
     </div>
   </div>
 </div>
-
 
 <script>
 // Accordion 
@@ -182,5 +140,6 @@ function w3_close() {
   document.getElementById("myOverlay").style.display = "none";
 }
 </script>
+
 </body>
 </html>

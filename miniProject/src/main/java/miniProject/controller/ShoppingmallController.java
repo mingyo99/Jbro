@@ -28,7 +28,7 @@ public class ShoppingmallController {
 	GoodsDetailService goodsDetailService;
 	@GetMapping("goodsSebu")
 	public String goodsSebu(String goodsNum, Model model) {
-		goodsDetailService.execute(goodsNum,model);
+		goodsDetailService.execute(goodsNum, model);
 		return "thymeleaf/shoppingmall/goodsSebu";
 	}
 	@GetMapping("top")
