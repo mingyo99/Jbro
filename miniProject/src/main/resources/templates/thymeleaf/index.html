@@ -25,12 +25,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <th:block th:if="${session.auth == null}">
     	<a href="login/login" class="w3-bar-item w3-button">로그인</a>
     </th:block>
-    <a href="/" class="w3-bar-item w3-button">홈</a>
-    <a href="" class="w3-bar-item w3-button">검색</a>
-    <a href="shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
     <th:block th:if="${session.auth != null}">
-	<a href="login/logout">로그아웃</a>
-	<th:block th:if="${session.auth.grade == 'emp'}">
+    	<a href="login/logout">로그아웃</a>
+    </th:block>
+	    <a href="/" class="w3-bar-item w3-button">홈</a>
+	    <a href="" class="w3-bar-item w3-button">검색</a>
+	    <a href="shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
+	<th:block th:if="${session.auth != null && session.auth.grade == 'emp'}">
 		<a href="member/memberList">회원 정보</a>
 		<a href="#" class="w3-bar-item w3-button">프로필</a>
         <a href="#" class="w3-bar-item w3-button">설정</a>
@@ -43,7 +44,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
           <a href="#" class="w3-bar-item w3-button">배송 관리</a>
         </div>
 	</th:block>
-	<th:block th:if="${session.auth.grade == 'mem'}">
+	<th:block th:if="${session.auth != null && session.auth.grade == 'mem'}">
 		<a th:href="|/posts/postsList?memberId=${session.auth.userId}|" class="w3-bar-item w3-button">프로필</a>
         <a href="#" class="w3-bar-item w3-button">설정</a>
         <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
@@ -55,7 +56,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
           <a href="#" class="w3-bar-item w3-button">주문내역</a>
         </div>
 	</th:block>
-</th:block>
+
 
     
   </div>
