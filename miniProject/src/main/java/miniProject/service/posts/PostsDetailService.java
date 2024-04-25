@@ -23,16 +23,19 @@ public class PostsDetailService {
 	MemberMapper memberMapper;
 	@Autowired
 	LikeMapper likeMapper;
-	public void execute(String postsNum, Model model, HttpSession session) {
+	public void execute(String postsNum, String memberNum, Model model, HttpSession session) {
 		PostsDTO dto = postsMapper.postsSelectOne(postsNum);
 		model.addAttribute("postsCommand", dto);
+		
+		MemberDTO memDto = memberMapper.memberSelectOne(memberNum);
+		model.addAttribute("memberCommand", memDto);
 		
 		String allLikeCount = likeMapper.likeCountSelectAll(postsNum).toString();
 		model.addAttribute("allLikeCount", allLikeCount);
 		
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
 		if(auth != null) {
-			MemberDTO memDto = memberMapper.memberSelectOne(auth.getUserId());
+			memDto = memberMapper.memberSelectOne(auth.getUserId());
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("postsNum", postsNum);
 			try {

@@ -16,7 +16,9 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </head>
 <body>
 <!-- 상품 나열 그리드 -->
-<button type="button" onclick="location.href='postsWrite'">글 작성</button>
+<th:block th:if="${session.auth != null0 && session.auth.userId == memberId}">
+	<button type="button" onclick="location.href='postsWrite'">글 작성</button>
+</th:block>
   <div class="w3-row">
    <th:block th:each="postsCommand, idx : ${list}">
     <div class="w3-col l3 s6">

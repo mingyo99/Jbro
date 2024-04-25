@@ -34,7 +34,10 @@ $(function(){
 </script>
 </head>
 <body>
- 	이름 : [[${postsCommand.memberNum}]]<br/>
+	<a th:href="|postsList?memberId=${memberCommand.memberId}|">
+		<img th:src="|/static/upload/${memberCommand.profileImg}|" width="50"/>
+ 		[[${memberCommand.memberId}]]<br/>
+ 	</a>
  	<th:block th:each="image : ${#strings.arraySplit(postsCommand.postsImg, '/')}">
  		<img th:src="|/static/upload/${image}|" style="width:30vh;height:40vh"><br/>
  	</th:block>
