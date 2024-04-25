@@ -19,10 +19,10 @@ public class PostsListService {
 	MemberMapper memberMapper;
 	@Autowired
 	PostsMapper postsMapper;
-	public void execute(HttpSession session, Model model) {
-		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
-		MemberDTO dto = memberMapper.memberSelectOne(auth.getUserId());
+	public void execute(String memberId, Model model) {
+		model.addAttribute("memberId", memberId);
 		
+		MemberDTO dto = memberMapper.memberSelectOne(memberId);
 		List<PostsDTO> list = postsMapper.postsSelectList(dto.getMemberNum());
 		model.addAttribute("list", list);
 	}

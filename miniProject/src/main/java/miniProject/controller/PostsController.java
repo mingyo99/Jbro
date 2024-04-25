@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import miniProject.command.PostsCommand;
@@ -32,8 +33,8 @@ public class PostsController {
 	@Autowired
 	PostsAutoNumService postsAutoNumService;
 	@GetMapping("postsList")
-	public String profile(HttpSession session, Model model) {
-		postsListService.execute(session, model);
+	public String profile(String memberId, Model model) {
+		postsListService.execute(memberId, model);
 		return "thymeleaf/posts/postsList";
 	}
 	@GetMapping("postsWrite")
@@ -47,13 +48,13 @@ public class PostsController {
 		return "redirect:postsList";
 	}
 	@GetMapping("postsDetail")
-	public String postsDetail(String postsNum, Model model, HttpSession session) {
-		postsDetailService.execute(postsNum, model, session);
+	public String postsDetail(@RequestParam("postsNum") String postsNum, @RequestParam("memberNum") String memberNum, Model model, HttpSession session) {
+		postsDetailService.execute(postsNum, memberNum, model, session);
 		return "thymeleaf/posts/postsDetail";
 	}
 	@GetMapping("postsUpdate")
-	public String postsUpdate(String postsNum, Model model, HttpSession session) {
-		postsDetailService.execute(postsNum, model, session);
+	public String postsUpdate(@RequestParam("postsNum") String postsNum, @RequestParam("memberNum") String memberNum, Model model, HttpSession session) {
+		postsDetailService.execute(postsNum, memberNum, model, session);
 		return "thymeleaf/posts/postsModify";
 	}
 	@PostMapping("postsUpdate")
