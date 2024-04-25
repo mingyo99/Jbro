@@ -7,16 +7,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
-import miniProject.service.cart.CartListService;
+import miniProject.service.wish.WishInsertService;
+import miniProject.service.wish.WishListService;
 
 @Controller
 @RequestMapping("wish")
 public class WishController {
 	@Autowired
-	CartListService cartListService;
+	WishListService wishListService;
 	@GetMapping("wishList")
 	public String wishList(String goodsNum, Model model, HttpSession session) {
-		cartListService.execute(goodsNum, model, session);
-		return "thymeleaf/cart/wishList";
+		wishListService.execute(goodsNum, model, session);
+		return "thymeleaf/wish/wishList";
+	}
+	@Autowired
+	WishInsertService wishInsertService;
+	@GetMapping("wishwrite")
+	public String wishWrite(String goodsNum, HttpSession session) {
+		wishInsertService.execute(goodsNum, session);
+		return "thymeleaf/wish/wishList";
 	}
 }
