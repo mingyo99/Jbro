@@ -12,8 +12,6 @@
 .w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </style>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/static/js/daumAddressScript.js"></script>
 </head>
 <body class="w3-content" style="max-width:1200px">
 
@@ -66,13 +64,12 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <!-- 상단 헤더 -->
   <header class="w3-container w3-xlarge">
-    <th:block th:each="goodsCommand, idx : ${dtos}">
     <p class="w3-left">MINIPROJECT</p>
     <p class="w3-right">
-      <button class="w3-button" th:attr="onclick=|javascript:location.href='/wish/wishList?goodsNum=${goodsCommand.goodsNum }'|"><i class="fa fa-shopping-cart"></i></button>
+      <button class="w3-button" onclick="javascript:location.href='/order/orderList'"><i class="fa fa-truck"></i></button>
+      <button class="w3-button" onclick="javascript:location.href='/wish/wishList'"><i class="fa fa-heart" style="color:red;"></i></button>
       <button class="w3-button"><i class="fa fa-search"></i></button>
     </p>
-    </th:block>
   </header>
 
 
@@ -83,36 +80,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
   <!-- 상품 나열 그리드 -->
   <div class="w3-row">
-  <th:block th:each="goodsCommand, idx : ${dtos}">
     <div class="w3-col l3 s6">
       <div class="w3-container">
-          <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:30vh;height:40vh">
-          <p>상품명 : <b>[[${goodsCommand.goodsName }]]</b>
-             상품가격 : <b>[[${goodsCommand.goodsPrice }]]원</b>
-             배송비 : <b>[[${goodsCommand.deliveryCost }]]원</b></p>
-             <table width="350">
-				<tr><td colspan=2>2. 배송 정보</td></tr>
-				<tr><td>받는 사람 </td>
-					<td><input type="text" name="deliveryName" /></td></tr>
-				<tr><td>받는 사람 주소 </td>
-					<td><input type="text" name="deliveryAddr" id="sample4_roadAddress"
-						onclick="execDaumPostcode();" readonly="readonly" /></td></tr>
-				<tr><td>받는 사람 상세 주소 </td>
-					<td><input type="text" name="deliveryAddrDetail" /></td></tr>
-				<tr><td>받는 사람 우편번호 </td>
-					<td><input type="text" name="deliveryPost" readonly="readonly" 
-						id="sample4_postcode"/></td></tr>
-				<tr><td>받는 사람 연락처 </td>
-					<td><input type="tel" name="deliveryPhone" /></td></tr>
-				<tr><td>배송 메세지 </td>
-					<td><input type="text" name="message" /></td></tr>
-			    <tr>
-					<td><button type="button" id="order" th:attr="onclick=|javascript:location.href='/wish/wishList?goodsNum=${goodsCommand.goodsNum }'|" >주문하기</button></td></tr>
-			</table>
-
+            <table width="800" align="center" >
+	            <tr><td>주문번호 / 결제번호</td><td> 상품명 </td><td> 주문상태 </td></tr>
+            </table>
       </div>
     </div>
-    </th:block>
   </div>
 
 

@@ -94,7 +94,8 @@ $(function(){
   <header class="w3-container w3-xlarge">
     <p class="w3-left">MINIPROJECT</p>
     <p class="w3-right">
-      <button class="w3-button"><i class="fa fa-shopping-cart"></i></button>
+      <button class="w3-button" onclick="javascript:location.href='/order/orderList'"><i class="fa fa-truck"></i></button>
+      <button class="w3-button" onclick="javascript:location.href='/wish/wishList'"><i class="fa fa-heart" style="color:red;"></i></button>
       <button class="w3-button"><i class="fa fa-search"></i></button>
     </p>
   </header>
@@ -103,7 +104,7 @@ $(function(){
   <div class="w3-display-container w3-container">
   <th:block th:each="goodsCommand, idx : ${dto}">
      <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:60vh;height:80vh">
-    <p><b><button type="button" id="wishbtn" th:attr="onclick=|javascript:location.href='/wish/wishList?goodsNum=${goodsCommand.goodsNum }'|">위시리스트</button>
+    <p><b><button type="button" id="wishbtn" onclick="javascript:location.href='/wish/wishList'">위시리스트</button>
           <button type="button" id="purchase" th:attr="onclick=|javascript:location.href='/purchase/purchase?goodsNum=${goodsCommand.goodsNum }'|">바로구매</button>
           <img th:if="${wish == 1}" src="/static/images/hrt1.jpg" id="wish" width="20" />
  		  <img th:if="${wish != 1}" src="/static/images/hrt.jpg" id="wish" width="20" /> 찜</b></p>

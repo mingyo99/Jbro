@@ -20,9 +20,8 @@ public class WishController {
 	@Autowired
 	WishListService wishListService;
 	@GetMapping("wishList")
-	public String wishList(String goodsNum, Model model, HttpSession session) {
-		model.addAttribute("goodsNum", goodsNum);
-		wishListService.execute(goodsNum, model, session);
+	public String wishList(Model model, HttpSession session) {
+		wishListService.execute(model, session);
 		return "thymeleaf/wish/wishList";
 	}
 	@Autowired

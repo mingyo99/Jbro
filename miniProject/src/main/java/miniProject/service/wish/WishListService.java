@@ -19,7 +19,7 @@ public class WishListService {
 	WishMapper wishMapper;
 	@Autowired
 	MemberMapper memberMapper;
-	public void execute(String goodsNum, Model model, HttpSession session) {
+	public void execute(Model model, HttpSession session) {
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
 		MemberDTO memDto = memberMapper.memberSelectOne(auth.getUserId());
 		
