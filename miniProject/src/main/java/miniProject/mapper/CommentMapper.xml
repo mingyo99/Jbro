@@ -1,0 +1,15 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//En" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miniProject.mapper.CommentMapper">
+<insert id="commentInsert" parameterType="comment">
+	insert into COMMENTS(POSTS_NUM, MEMBER_NUM, COMMENTS_CONTENT, COMMENTS_DATE, COMMENTS_NUM)
+	values(#{postsNum}, #{memberNum}, #{CommentsContent}, sysdate, #{commentsNum})
+</insert>
+<select id="commentSelect" parameterType="string" resultType="hashmap">
+	select COMMENTS_CONTENT CommentsContent, MEMBER_ID memberId, m.MEMBER_NUM memberNum
+	from COMMENTS c join MEMBERS m
+	on c.MEMBER_NUM = m.MEMBER_NUM
+	where POSTS_NUM = #{postsNum}
+	order by COMMENTS_NUM
+</select>
+
+</mapper>
