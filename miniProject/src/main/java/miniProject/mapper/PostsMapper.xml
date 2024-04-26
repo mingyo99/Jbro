@@ -34,7 +34,9 @@
 		<if test="weight != null and weight != ''">
 			AND WEIGHT = #{weight}
 		</if>
+		<if test="style != null and style != ''">
+			AND POSTS_STYLE = #{style}
+		</if>
 	</trim>
-	
 </select>
 </mapper>

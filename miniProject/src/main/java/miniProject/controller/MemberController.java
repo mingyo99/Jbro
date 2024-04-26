@@ -3,6 +3,8 @@ package miniProject.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +42,14 @@ public class MemberController {
 		return "thymeleaf/member/memberForm";
 	}
 	@PostMapping("memberRegist")
-	public String memberRegist(MemberCommand memberCommand) {
+	public String memberRegist(@Validated MemberCommand memberCommand, BindingResult result) {
+		if(result.hasErrors()) {
+			return "thymeleaf/member/memberForm";
+		}
+		if(!memberCommand.isMemberPwEqualsMemberPwCon()) {
+			result.rejectValue("memberPwCon", "memberCommand.memberPwCon", "비밀번호 확인이 일치하지 않습니다.");
+			return "thymeleaf/member/memberForm";
+		}
 		memberWriteService.execute(memberCommand);
 		return "redirect:/";
 	}

@@ -96,7 +96,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   	<form action="/" method="get">
   		<input type="checkbox" name="gender" th:checked="${gender == 'M'}" value="M"/>M
   		<input type="checkbox" name="gender" th:checked="${gender == 'F'}" value="F"/>F
-  	  HEIGHT <select name="height" >
+HEIGHT  <select name="height" >
   	  		<option></option>
 			<option th:selected="${height == '~150cm'}">~150cm</option>
 			<option th:selected="${height == '150~157cm'}">150~157cm</option>
@@ -109,7 +109,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 			<option th:selected="${height == '185~192cm'}">185~192cm</option>
 			<option th:selected="${height == '192cm~'}">192cm~</option>
 		</select>
-   WEIGHT <select name="weight" >
+WEIGHT  <select name="weight" >
    			<option></option>
 			<option th:selected="${weight == '~45kg'}">~45kg</option>
 			<option th:selected="${weight == '45~50kg'}">45~50kg</option>
@@ -122,6 +122,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 			<option th:selected="${weight == '80~85kg'}">80~85kg</option>
 			<option th:selected="${weight == '85~90kg'}">85~90kg</option>
 			<option th:selected="${weight == '90kg~'}">90kg~</option>
+		</select>
+  MOOD  <select name="style" >
+   			<option></option>
+			<option th:selected="${style == '1'}">1</option>
+			<option th:selected="${style == '2'}">2</option>
+			<option th:selected="${style == '3'}">3</option>
+			<option th:selected="${style == '4'}">4</option>
 		</select>
 		<input type="submit" value="적용"/>
   	</form>

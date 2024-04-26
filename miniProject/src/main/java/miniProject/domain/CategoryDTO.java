@@ -10,4 +10,5 @@ public class CategoryDTO {
 	String gender;
 	String weight;
 	String height;
+	String style;
 }

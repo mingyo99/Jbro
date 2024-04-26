@@ -85,17 +85,18 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
   <div class="w3-container w3-text-grey" align="center">
     <p><b>회원 로그인</b></p>
-    <form action="loginOk" method="post">
+    <form action="loginOk" method="post" th:object="${loginCommand}">
         <input type="text" name="userId" placeholder="아이디"/>
         <input type="password" name="userPw" placeholder="비밀번호"/>
-        <input type="submit" value="로그인"/>
+        <input type="submit" value="로그인"/><br/>
+		<div class="w3-container w3-text-grey" align="center" >
+     		<div class="w3-container" align="center">
+      			<span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></span>
+				<span th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}"></span>
+        		<a href="/member/memberAgree">계정이없다면?</a>
+    		</div>
+  		</div>
       </form>
-  </div>
-
-  <div class="w3-container w3-text-grey" align="center" >
-      <div class="w3-container" align="center">
-        <a href="/member/memberAgree">계정이없다면?</a>
-    </div>
   </div>
 </div>
 

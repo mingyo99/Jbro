@@ -24,8 +24,9 @@ public class MiniProjectApplication {
 	public String index(@RequestParam(value = "gender", required = false)String gender
 					  , @RequestParam(value = "height", required = false)String height
 					  , @RequestParam(value = "weight", required = false)String weight
+					  , @RequestParam(value = "style", required = false)String style
 					  ,Model model) {
-		allPostsListService.execute(gender, height, weight, model);
+		allPostsListService.execute(gender, height, weight, style, model);
 		return "thymeleaf/index";
 	}
 
