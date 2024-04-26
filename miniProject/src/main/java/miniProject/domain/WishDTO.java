@@ -1,5 +1,7 @@
 package miniProject.domain;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -7,7 +9,7 @@ import lombok.Data;
 @Data
 @Alias("wish")
 public class WishDTO {
-	Integer wishNum;
+	Date wishDate;
 	String memberNum;
 	String goodsNum;
 }

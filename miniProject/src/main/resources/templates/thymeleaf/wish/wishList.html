@@ -79,19 +79,17 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
   <!-- 상품 나열 그리드 -->
   <div class="w3-row">
+  <th:block th:each="goodsCommand, idx : ${list}">
     <div class="w3-col l3 s6">
       <div class="w3-container">
-          <th:block th:each="goodsCommand, idx : ${list}">
-              <a href="asd"><img src="/static/images/손나은.jpg" style="width:30vh;height:40vh"></a>
-              <p>상품명 : <b>[[${goodsCommand.goodsName }]]</b></p>
-              <p>상품가격 : <b>[[${goodsCommand.goodsPrice }]]</b></p>
-          </th:block>
+      <a th:href="|/shoppingmall/goodsSebu?goodsNum=${goodsCommand.goodsNum}|">
+          <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:30vh;height:40vh">
+          <p>상품명 : <b>[[${goodsCommand.goodsName }]]</b><br>
+             상품가격 : <b>[[${goodsCommand.goodsPrice }]]</b></p>
       </div>
-      <div class="w3-container">
-        <a href="asd"><img src="/static/images/손나은1.jpg" style="width:30vh;height:40vh"></a>
-        <p>상품명2<br><b>$가격</b></p>
-      </div>
-    </div> 
+    </div>
+    <th:block th:if="${idx.count % 4 == 0}" th:utext="'</div><div>'" />
+    </th:block>
   </div>
 
 

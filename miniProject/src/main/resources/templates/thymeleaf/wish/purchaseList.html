@@ -12,35 +12,9 @@
 .w3-sidebar a {font-family: "Roboto", sans-serif}
 body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </style>
-
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/static/js/daumAddressScript.js"></script>
 </head>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	$("#wish").click(function(){
-		
-		$.ajax({
-			type:"post",
-			url : "/wish/wishAdd",
-			data: {"goodsNum":"[[${goodsNum}]]"},
-			success : function(result){ // 1:추가 , 0:삭제 , 900:관리자로그인
-				if(result == "1"){
-					$("#wish").attr("src","/static/images/hrt1.jpg");
-				}else if(result == "0"){
-					$("#wish").attr("src","/static/images/hrt.jpg");
-				}else if(result == "900"){
-					alert("관리자는 사용할 수 없는 페이지입니다.");
-				}
-			},
-			error:function(){
-				alert("로그인을 해주세요.");
-				location.href="/login/login";
-			}
-		});
-		
-	});
-});
-</script>
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
@@ -99,41 +73,51 @@ $(function(){
     </p>
   </header>
 
-  <!-- 메인 이미지 헤더 -->
-  <div class="w3-display-container w3-container">
-  <th:block th:each="goodsCommand, idx : ${dto}">
-     <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:60vh;height:80vh">
-    <p><b><button type="button" id="wishbtn" th:attr="onclick=|javascript:location.href='/wish/wishList?goodsNum=${goodsCommand.goodsNum }'|">위시리스트</button>
-          <button type="button" id="purchase" th:attr="onclick=|javascript:location.href='/purchase/purchase?goodsNum=${goodsCommand.goodsNum }'|">바로구매</button>
-          <img th:if="${wish == 1}" src="/static/images/hrt1.jpg" id="wish" width="20" />
- 		  <img th:if="${wish != 1}" src="/static/images/hrt.jpg" id="wish" width="20" /> 찜</b></p>
- </th:block>
+
+
+  <div class="w3-container w3-text-grey" id="jeans">
+    <p>상품 구매</p>
   </div>
+
+  <!-- 상품 나열 그리드 -->
   <div class="w3-row">
-  
-    <div class="w3-col l3 s6" style="width:100%">
+  <th:block th:each="goodsCommand, idx : ${dtos}">
+    <div class="w3-col l3 s6">
       <div class="w3-container">
-      <th:block th:each="goodsCommand, idx : ${dto}">
-        <p>상품명 : <b>[[${goodsCommand.goodsName }]]</b></p>
-        <p>상품가격 : <b>[[${goodsCommand.goodsPrice }]]</b></p>
-        <p>배송비 : <b>[[${goodsCommand.deliveryCost }]]</b></p>
-        
-        
-          <p>조회수 : <b>[[${goodsCommand.visitCount }]]</b></p>
-          <p>상품설명 : <!-- \n을 <br />로 변경합니다. -->
-          <span  th:utext="${#strings.replace(goodsCommand.goodsContent, newLine, '&lt;br /&gt;')}"></span></p>
-            <p>상세이미지<p>
-	   	      <th:block th:each="image : ${#strings.arraySplit(goodsCommand.goodsImages,'/')}">
-		        <img th:src="@{'/static/upload/'+${image}}" style="width:60vh; height:80vh"/>
-		      </th:block>
-          <br>
-		  <a href="javascript:history.back();">뒤로가기</a>		
-		
-		</th:block>
+          <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:30vh;height:40vh">
+          <p>상품명 : <b>[[${goodsCommand.goodsName }]]</b>
+             상품가격 : <b>[[${goodsCommand.goodsPrice }]]원</b>
+             배송비 : <b>[[${goodsCommand.deliveryCost }]]원</b></p>
+             <table width="350">
+				<tr><td colspan=2>2. 배송 정보</td></tr>
+				<tr><td>받는 사람 </td>
+					<td><input type="text" name="deliveryName" /></td></tr>
+				<tr><td>받는 사람 주소 </td>
+					<td><input type="text" name="deliveryAddr" id="sample4_roadAddress"
+						onclick="execDaumPostcode();" readonly="readonly" /></td></tr>
+				<tr><td>받는 사람 상세 주소 </td>
+					<td><input type="text" name="deliveryAddrDetail" /></td></tr>
+				<tr><td>받는 사람 우편번호 </td>
+					<td><input type="text" name="deliveryPost" readonly="readonly" 
+						id="sample4_postcode"/></td></tr>
+				<tr><td>받는 사람 연락처 </td>
+					<td><input type="tel" name="deliveryPhone" /></td></tr>
+				<tr><td>배송 메세지 </td>
+					<td><input type="text" name="message" /></td></tr>
+			    <tr>
+					<td><button type="button" id="order" th:attr="onclick=|javascript:location.href='/wish/wishList?goodsNum=${goodsCommand.goodsNum }'|" >주문하기</button></td></tr>
+			</table>
+
       </div>
     </div>
+    </th:block>
   </div>
- 
+
+
+
+  <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
+
+  <!-- End page content -->
 </div>
 
 <!-- Newsletter Modal -->
@@ -148,7 +132,6 @@ $(function(){
     </div>
   </div>
 </div>
-
 
 <script>
 // Accordion 
@@ -176,5 +159,6 @@ function w3_close() {
   document.getElementById("myOverlay").style.display = "none";
 }
 </script>
+
 </body>
 </html>
