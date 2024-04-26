@@ -5,7 +5,7 @@
 	values(#{postsNum}, #{memberNum}, #{CommentsContent}, sysdate, #{commentsNum})
 </insert>
 <select id="commentSelect" parameterType="string" resultType="hashmap">
-	select COMMENTS_CONTENT CommentsContent, MEMBER_ID memberId, m.MEMBER_NUM memberNum
+	select COMMENTS_CONTENT CommentsContent, MEMBER_ID memberId, PROFILE_IMG profileImg
 	from COMMENTS c join MEMBERS m
 	on c.MEMBER_NUM = m.MEMBER_NUM
 	where POSTS_NUM = #{postsNum}

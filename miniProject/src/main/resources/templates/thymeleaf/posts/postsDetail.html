@@ -20,7 +20,7 @@ $(function(){
 				console.log(result);
 				$("#content").empty();
 				result.forEach(function (result) {
-	                $('#content').append("<div><a href='postsList?memberId=" + result.MEMBERID + "'>" + result.MEMBERID +'</a>' + ' : ' + result.COMMENTSCONTENT + '</div>');
+	                $('#content').append("<div><a href='postsList?memberId=" + result.MEMBERID + "'><img if='" + result.PROFILEIMG + "!= null}' src='/static/upload/"+ result.PROFILEIMG + "' width='50'/>" + result.MEMBERID +'</a>'+ result.COMMENTSCONTENT + '</div>');
 	           
 	            });
 				$("#comment").val("");
@@ -83,17 +83,21 @@ $(function(){
 	
 	<!-- Comment -->
 	<div id="content" >
+	
 	<th:block th:each="CommentCommand : ${list}">
 		<div>
-			<a th:href="|postsList?memberId=${CommentCommand.MEMBERID}|">[[${CommentCommand.MEMBERID}]]</a> : <br/>
+			<a th:href="|postsList?memberId=${CommentCommand.MEMBERID}|">
+				<img th:if="${CommentCommand.PROFILEIMG != null}" th:src="|/static/upload/${CommentCommand.PROFILEIMG}|" width="50"/>[[${CommentCommand.MEMBERID}]]
+			</a> 
 			<span th:utext="${#strings.replace(CommentCommand.COMMENTSCONTENT, newLine,'&lt;br /&gt;')}"></span>
+			
+			
 		</div>
 	</th:block>
 	</div>
 	<th:block th:if="${session.auth != null}">
 		<form id="frm">
 			<textarea rows="10" cols="50"  id="comment" name="comment" placeholder="댓글 달기.." required="required"></textarea>
-			
 			<input type="submit" value="게시">
 		</form>
 	</th:block>

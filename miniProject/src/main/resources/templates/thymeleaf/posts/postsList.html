@@ -23,7 +23,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
    <th:block th:each="postsCommand, idx : ${list}">
     <div class="w3-col l3 s6">
       <div class="w3-container" >
-        <a th:href="|postsDetail?postsNum=${postsCommand.postsNum}|">
+        <a th:href="|postsDetail?postsNum=${postsCommand.postsNum}&memberNum=${postsCommand.memberNum}|">
         <img th:src="|/static/upload/${#strings.arraySplit(postsCommand.postsImg, '/')[0]}|" style="width:30vh;height:40vh"></a>
         <p>[[${postsCommand.memberNum}]]</p>
       </div>

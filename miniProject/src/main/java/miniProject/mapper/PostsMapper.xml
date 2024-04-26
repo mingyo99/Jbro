@@ -20,7 +20,21 @@
 <delete id="postsDelete" parameterType="string">
 	delete from POSTS where POSTS_NUM = #{postsNum}
 </delete>
-<select id="postsAllSelectList" resultType="posts">
-	select <include refid="postsBaseColumn"/> from POSTS
+<select id="postsAllSelectList" resultType="posts" parameterType="category">
+	select 	POSTS_NUM postsNum, p.MEMBER_NUM memberNum, POSTS_IMG postsImg, POSTS_IMG_IMG postsImgImg, POSTS_CONTENT postsContent, POSTS_DATE postsDate, POSTS_STYLE postsStyle
+	from POSTS p join MEMBERS m
+	on p.MEMBER_NUM = m.MEMBER_NUM
+	<trim prefix="WHERE" prefixOverrides="AND | OR">
+		<if test='gender != null and (gender == "M" or gender == "F")'>
+			AND GENDER = #{gender}
+		</if>
+		<if test="height != null and height != ''">
+			AND HEIGHT = #{height}
+		</if>
+		<if test="weight != null and weight != ''">
+			AND WEIGHT = #{weight}
+		</if>
+	</trim>
+	
 </select>
 </mapper>

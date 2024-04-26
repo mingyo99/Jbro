@@ -10,5 +10,4 @@ public class CommentCommand {
 	String memberNum;
 	Date commentsDate;
 	String commentsNum;
-	String memberId;
 }

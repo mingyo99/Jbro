@@ -91,8 +91,41 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     </p>
   </header>
 
-
-
+<!-- 카테고리 -->
+  <div class="w3-container w3-text-grey">
+  	<form action="/" method="get">
+  		<input type="checkbox" name="gender" th:checked="${gender == 'M'}" value="M"/>M
+  		<input type="checkbox" name="gender" th:checked="${gender == 'F'}" value="F"/>F
+  	  HEIGHT <select name="height" >
+  	  		<option></option>
+			<option th:selected="${height == '~150cm'}">~150cm</option>
+			<option th:selected="${height == '150~157cm'}">150~157cm</option>
+			<option th:selected="${height == '155~162cm'}">155~162cm</option>
+			<option th:selected="${height == '160~167cm'}">160~167cm</option>
+			<option th:selected="${height == '165~172cm'}">165~172cm</option>
+			<option th:selected="${height == '170~177cm'}">170~177cm</option>
+			<option th:selected="${height == '175~182cm'}">175~182cm</option>
+			<option th:selected="${height == '180~187cm'}">180~187cm</option>
+			<option th:selected="${height == '185~192cm'}">185~192cm</option>
+			<option th:selected="${height == '192cm~'}">192cm~</option>
+		</select>
+   WEIGHT <select name="weight" >
+   			<option></option>
+			<option th:selected="${weight == '~45kg'}">~45kg</option>
+			<option th:selected="${weight == '45~50kg'}">45~50kg</option>
+			<option th:selected="${weight == '50~55kg'}">50~55kg</option>
+			<option th:selected="${weight == '55~60kg'}">55~60kg</option>
+			<option th:selected="${weight == '60~65kg'}">60~65kg</option>
+			<option th:selected="${weight == '65~70kg'}">65~70kg</option>
+			<option th:selected="${weight == '70~75kg'}">70~75kg</option>
+			<option th:selected="${weight == '75~80kg'}">75~80kg</option>
+			<option th:selected="${weight == '80~85kg'}">80~85kg</option>
+			<option th:selected="${weight == '85~90kg'}">85~90kg</option>
+			<option th:selected="${weight == '90kg~'}">90kg~</option>
+		</select>
+		<input type="submit" value="적용"/>
+  	</form>
+  </div>		
   <div class="w3-container w3-text-grey" id="jeans">
     <p>추천 게시물</p>
   </div>
@@ -112,9 +145,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </div>
 
   
-
-  <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
-
   <!-- End page content -->
 </div>
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import miniProject.domain.CategoryDTO;
 import miniProject.domain.PostsDTO;
 
 @Mapper
@@ -13,5 +14,5 @@ public interface PostsMapper {
 	public PostsDTO postsSelectOne(String postsNum);
 	public void postsUpdate(PostsDTO dto);
 	public int postsDelete(String postsNum);
-	public List<PostsDTO> postsAllSelectList();
+	public List<PostsDTO> postsAllSelectList(CategoryDTO dto);
 }

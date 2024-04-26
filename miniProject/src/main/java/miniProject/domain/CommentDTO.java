@@ -14,5 +14,4 @@ public class CommentDTO {
 	String memberNum;
 	Date commentsDate;
 	String commentsNum;
-	String memberId;
 }

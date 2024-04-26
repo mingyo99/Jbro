@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import miniProject.service.AllPostsListService;
 @Controller
@@ -20,8 +21,11 @@ public class MiniProjectApplication {
 	@Autowired
 	AllPostsListService allPostsListService;
 	@GetMapping("/")
-	public String index(Model model) {
-		allPostsListService.execute(model);
+	public String index(@RequestParam(value = "gender", required = false)String gender
+					  , @RequestParam(value = "height", required = false)String height
+					  , @RequestParam(value = "weight", required = false)String weight
+					  ,Model model) {
+		allPostsListService.execute(gender, height, weight, model);
 		return "thymeleaf/index";
 	}
 

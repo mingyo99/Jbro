@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import miniProject.command.PostsCommand;
+import miniProject.domain.AuthInfoDTO;
 import miniProject.service.posts.PostsAutoNumService;
 import miniProject.service.posts.PostsDeleteService;
 import miniProject.service.posts.PostsDetailService;
@@ -45,7 +46,8 @@ public class PostsController {
 	@PostMapping("postsRegist")
 	public String postRegist(PostsCommand postsCommand, HttpSession session) {
 		postsWriteService.execute(postsCommand, session);
-		return "redirect:postsList";
+		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
+		return "redirect:postsList?memberId=" + auth.getUserId();
 	}
 	@GetMapping("postsDetail")
 	public String postsDetail(@RequestParam("postsNum") String postsNum, @RequestParam("memberNum") String memberNum, Model model, HttpSession session) {
@@ -63,8 +65,9 @@ public class PostsController {
 		return "redirect:postsDetail?postsNum=" + postsCommand.getPostsNum();
 	}
 	@GetMapping("postsDelete")
-	public String postsDelete(String postsNum) {
+	public String postsDelete(String postsNum, HttpSession session) {
 		postsDeleteService.execute(postsNum);
-		return "redirect:postsList";
+		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
+		return "redirect:postsList?memberId=" + auth.getUserId();
 	}
 }
