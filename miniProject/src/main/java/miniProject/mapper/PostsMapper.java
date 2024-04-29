@@ -15,4 +15,6 @@ public interface PostsMapper {
 	public void postsUpdate(PostsDTO dto);
 	public int postsDelete(String postsNum);
 	public List<PostsDTO> postsAllSelectList(CategoryDTO dto);
+	public void likeAdd(String purchaseNum);
+	public void likeDel(String purchaseNum);
 }

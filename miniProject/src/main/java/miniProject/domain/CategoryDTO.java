@@ -11,4 +11,5 @@ public class CategoryDTO {
 	String weight;
 	String height;
 	String style;
+	String orderBy;
 }

@@ -9,4 +9,9 @@
 	from EMPLOYEES
 	where EMP_ID = #{userId}
 </select>
+<select id="idCheckSelectOne" parameterType="string" resultType="string">
+	select MEMBER_ID from MEMBERS where MEMBER_ID = #{userId}
+	union
+	select EMP_ID from EMPLOYEES where EMP_ID = #{userId}
+</select>
 </mapper>

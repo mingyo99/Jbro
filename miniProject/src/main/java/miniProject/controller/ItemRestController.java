@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import miniProject.command.CommentCommand;
 import miniProject.domain.CommentDTO;
 import miniProject.service.comment.CommentAddService;
+import miniProject.service.login.UserIdCheckService;
 import miniProject.service.posts.PostsLikeService;
 
 @RestController
@@ -21,6 +22,8 @@ public class ItemRestController {
 	PostsLikeService postsLikeService;
 	@Autowired
 	CommentAddService commentAddService;
+	@Autowired
+	UserIdCheckService userIdCheckService;
 	@PostMapping("postslikeAddDel")
 	public Map<String, String> postslikeAddDel(String postsNum, HttpSession session) {
 		Map<String, String> map = postsLikeService.execute(postsNum, session);
@@ -31,5 +34,14 @@ public class ItemRestController {
 	@PostMapping("comment")
 	public List<CommentDTO> comment( CommentCommand commentCommand, HttpSession session) {
 		return commentAddService.execute(commentCommand, session);
+	}
+	@PostMapping("userIdCheck")
+	public String userIdCheck(String userId) {
+		String i = userIdCheckService.execute(userId);
+		if(i == null) {
+			return "0";
+		}else {
+			return "1";
+		}
 	}
 }

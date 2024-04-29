@@ -4,8 +4,8 @@
 	POSTS_NUM postsNum, MEMBER_NUM memberNum, POSTS_IMG postsImg, POSTS_IMG_IMG postsImgImg, POSTS_CONTENT postsContent, POSTS_DATE postsDate, POSTS_STYLE postsStyle
 </sql>
 <insert id="postsInsert" parameterType="posts">
-	insert into POSTS(POSTS_NUM, MEMBER_NUM, POSTS_IMG, POSTS_IMG_IMG, POSTS_CONTENT, POSTS_DATE, POSTS_STYLE)
-	values(#{postsNum}, #{memberNum}, #{postsImg}, #{postsImgImg}, #{postsContent}, sysdate, #{postsStyle})
+	insert into POSTS(POSTS_NUM, MEMBER_NUM, POSTS_IMG, POSTS_IMG_IMG, POSTS_CONTENT, POSTS_DATE, POSTS_STYLE, POSTS_LIKE)
+	values(#{postsNum}, #{memberNum}, #{postsImg}, #{postsImgImg}, #{postsContent}, sysdate, #{postsStyle}, 0)
 </insert>
 <select id="postsSelectList" parameterType="string" resultType="posts">
 	select <include refid="postsBaseColumn"/> from POSTS where MEMBER_NUM = #{memberNum}
@@ -22,6 +22,7 @@
 </delete>
 <select id="postsAllSelectList" resultType="posts" parameterType="category">
 	select 	POSTS_NUM postsNum, p.MEMBER_NUM memberNum, POSTS_IMG postsImg, POSTS_IMG_IMG postsImgImg, POSTS_CONTENT postsContent, POSTS_DATE postsDate, POSTS_STYLE postsStyle
+		  , MEMBER_ID memberid
 	from POSTS p join MEMBERS m
 	on p.MEMBER_NUM = m.MEMBER_NUM
 	<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -38,5 +39,18 @@
 			AND POSTS_STYLE = #{style}
 		</if>
 	</trim>
+	<if test='orderBy != null and orderBy == "인기순"'>
+		order by POSTS_LIKE desc
+	</if>
 </select>
+<update id="likeAdd" parameterType="string">
+	update POSTS
+	set POSTS_LIKE = POSTS_LIKE + 1
+	where POSTS_NUM = #{postsNum}
+</update>
+<update id="likeDel" parameterType="string">
+	update POSTS
+	set POSTS_LIKE = POSTS_LIKE - 1
+	where POSTS_NUM = #{postsNum}
+</update>
 </mapper>

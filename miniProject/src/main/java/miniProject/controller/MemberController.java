@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpSession;
 import miniProject.command.MemberCommand;
+import miniProject.domain.AuthInfoDTO;
 import miniProject.service.member.MemberAutoNumService;
 import miniProject.service.member.MemberDeleteService;
 import miniProject.service.member.MemberDetailService;
@@ -48,6 +50,7 @@ public class MemberController {
 		}
 		if(!memberCommand.isMemberPwEqualsMemberPwCon()) {
 			result.rejectValue("memberPwCon", "memberCommand.memberPwCon", "비밀번호 확인이 일치하지 않습니다.");
+			System.out.println("asd");
 			return "thymeleaf/member/memberForm";
 		}
 		memberWriteService.execute(memberCommand);
@@ -69,9 +72,18 @@ public class MemberController {
 		return "thymeleaf/member/memberModify";
 	}
 	@PostMapping("memberUpdate")
-	public String memberUpdate(MemberCommand memberCommand) {
+	public String memberUpdate(@Validated MemberCommand memberCommand, BindingResult result, HttpSession session) {
+		if(result.hasErrors()) {
+			return "thymeleaf/member/memberModify";
+		}
 		memberUpdateService.execute(memberCommand);
-		return "redirect:memberDetail?memberNum=" + memberCommand.getMemberNum();
+		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
+		if(auth.getGrade().equals("emp")) {
+			return "redirect:memberDetail?memberNum=" + memberCommand.getMemberNum();
+		}else {
+			return "redirect:/posts/postsList?memberId=" + auth.getUserId();
+		}
+		
 	}
 	@GetMapping("memberDelete")
 	public String memberDelete(String memberNum) {

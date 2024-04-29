@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpSession;
 import miniProject.command.MemberCommand;
 import miniProject.domain.MemberDTO;
 import miniProject.mapper.MemberMapper;
@@ -32,7 +33,7 @@ public class MemberUpdateService {
 		
 		URL resource = getClass().getClassLoader().getResource("static/upload");
 		System.out.println(resource);
-		String filrDir = "C:\\dev\\src5\\miniProject\\target\\classes\\static\\upload";
+		String filrDir = resource.getFile();
 		MultipartFile mf = memberCommand.getProfileImg();
 		String originalFile = mf.getOriginalFilename();
 		String extension = originalFile.substring(originalFile.lastIndexOf("."));

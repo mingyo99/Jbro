@@ -15,4 +15,8 @@ public class PostsDTO {
 	String postsContent;
 	Date postsdate;
 	String postsStyle;
+	
+	String memberId;
+	
+	
 }

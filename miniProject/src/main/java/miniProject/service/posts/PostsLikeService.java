@@ -12,6 +12,7 @@ import miniProject.domain.AuthInfoDTO;
 import miniProject.domain.MemberDTO;
 import miniProject.mapper.LikeMapper;
 import miniProject.mapper.MemberMapper;
+import miniProject.mapper.PostsMapper;
 
 @Service
 public class PostsLikeService {
@@ -19,6 +20,8 @@ public class PostsLikeService {
 	MemberMapper memberMapper;
 	@Autowired
 	LikeMapper likeMapper;
+	@Autowired
+	PostsMapper postsMapper;
 	public Map<String, String> execute(String postsNum, HttpSession session) {
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
 		MemberDTO dto = memberMapper.memberSelectOne(auth.getUserId());
@@ -37,8 +40,10 @@ public class PostsLikeService {
 			int likeCount = likeMapper.likeCountSelectOne(map);
 			if(likeCount == 1) {
 				map.put("likeCount", "1");
+				postsMapper.likeAdd(postsNum);
 			}else {
 				map.put("likeCount", "0");
+				postsMapper.likeDel(postsNum);
 			}
 		}
 		String allLikeCount = likeMapper.likeCountSelectAll(postsNum).toString();

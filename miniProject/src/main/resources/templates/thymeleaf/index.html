@@ -94,6 +94,10 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 <!-- 카테고리 -->
   <div class="w3-container w3-text-grey">
   	<form action="/" method="get">
+  		<select name="orderBy" >
+  			<option >최신순</option>
+			<option th:selected="${orderBy == '인기순'}">인기순</option>
+  		</select>
   		<input type="checkbox" name="gender" th:checked="${gender == 'M'}" value="M"/>M
   		<input type="checkbox" name="gender" th:checked="${gender == 'F'}" value="F"/>F
 HEIGHT  <select name="height" >
@@ -144,7 +148,7 @@ WEIGHT  <select name="weight" >
       <div class="w3-container" >
         <a th:href="|/posts/postsDetail?postsNum=${postsCommand.postsNum}&memberNum=${postsCommand.memberNum}|">
         <img th:src="|/static/upload/${#strings.arraySplit(postsCommand.postsImg, '/')[0]}|" style="width:30vh;height:40vh"></a>
-        <p>[[${postsCommand.memberNum}]]</p>
+        <p>[[${postsCommand.memberId}]]</p>
       </div>
     </div>
     <th:block th:if="${idx.count % 4 == 0}" th:utext="'</div><div>'" />

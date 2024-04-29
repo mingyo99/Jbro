@@ -7,4 +7,5 @@ import miniProject.domain.AuthInfoDTO;
 @Mapper
 public interface LoginMapper {
 	public AuthInfoDTO loginSelect(String userId);
+	public String idCheckSelectOne(String userId);
 }
