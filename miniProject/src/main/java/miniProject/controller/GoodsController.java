@@ -18,6 +18,7 @@ import miniProject.service.goods.GoodsAutoNumService;
 import miniProject.service.goods.GoodsDeleteService;
 import miniProject.service.goods.GoodsDetailService;
 import miniProject.service.goods.GoodsListService;
+import miniProject.service.goods.GoodsOderListService;
 import miniProject.service.goods.GoodsUpdateService;
 import miniProject.service.goods.GoodsWriteService;
 import miniProject.service.goods.ProductsDeleteService;
@@ -109,5 +110,12 @@ public class GoodsController {
 	public String goodsDel(@PathVariable("goodsNum") String goodsNum) {
 		goodsDeleteService.execute(goodsNum);
 		return "redirect:../goodsList"; //PathVariable인 경우에는 주소 앞에 .. 을 꼭해줘야 합니다.
+	}
+	@Autowired
+	GoodsOderListService goodsOderListService;
+	@GetMapping("goodsOderList")
+	public String goodsOderList(Model model) {
+		goodsOderListService.execute(model);
+		return "thymeleaf/goods/goodsOderList";
 	}
 }

@@ -9,5 +9,20 @@ select goods_main_store goodsMainStore, goods_price goodsPrice, delivery_cost de
 from goods  
 where goods_Num = #{goodsNum}
 </select>
-
+<insert id="purchaseInsert" parameterType="purchase">
+insert into Purchase (MEMBER_NUM, PURCHASE_NUM, DELIVERY_ADDR, DELIVERY_ADDR_DETAIL, DELIVERY_POST, DELIVERY_PHONE, MESSAGE, PURCHASE_NAME, DELIVERY_NAME, PURCHASE_STATUS, PURCHASE_DATE)
+values (#{memberNum}, #{purchaseNum}, #{deliveryAddr}, #{deliveryAddrDetail}, #{deliveryPost}, #{deliveryPhone}, #{message}, #{purchaseName}, #{deliveryName}, '주문완료', sysdate)
+</insert>
+<select id="purchaseSelect" resultType="purchase" parameterType="string">
+select purchase_Num purchaseNum, purchase_Name purchaseName, PURCHASE_STATUS purchaseStatus
+from purchase
+<if test="memberNum != null">
+	where MEMBER_NUM = #{memberNum}
+</if>
+</select>
+<update id="purchaseStatusUpdate" parameterType="string">
+	update Purchase
+	set PURCHASE_STATUS = #{status}
+	where PURCHASE_NUM = #{purchaseNum}
+</update>
 </mapper>

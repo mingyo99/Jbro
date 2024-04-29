@@ -75,15 +75,29 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 
   <div class="w3-container w3-text-grey" id="jeans">
-    <p>상품 구매</p>
+    <p>주문하신 상품 리스트</p>
   </div>
 
   <!-- 상품 나열 그리드 -->
   <div class="w3-row">
+  
     <div class="w3-col l3 s6">
       <div class="w3-container">
-            <table width="800" align="center" >
-	            <tr><td>주문번호 / 결제번호</td><td> 상품명 </td><td> 주문상태 </td></tr>
+            <table width="900" align="center" >
+	            <tr><td>주문번호 </td><td> 상품명 </td><td> 주문상태 </td><td> 주문내용 </td></tr>
+	            <th:block th:each="purchaseCommand:${dtos}">
+	            <tr>
+		            <td>[[${purchaseCommand.purchaseNum}]]</td>
+		            <td>[[${purchaseCommand.purchaseName}]]</td>
+		            <td th:if="${purchaseCommand.purchaseStatus != '배송완료'}">
+		            	[[${purchaseCommand.purchaseStatus}]]
+		            </td>
+		            <td th:if="${purchaseCommand.purchaseStatus == '배송완료'}">
+		            	<a th:href="|/order/purchaseOk?purchaseNum=${purchaseCommand.purchaseNum}|">[[${purchaseCommand.purchaseStatus}]]</a>
+		            </td>
+		            <td>purchaseDetail</td>
+	            </tr>
+	            </th:block>
             </table>
       </div>
     </div>

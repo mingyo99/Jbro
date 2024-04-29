@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+<ul th:if="${#strings.isEmpty(item)}">
+    <li><a href="/shoppingmall/shoppingmallMain">홈</a></li>
+	<li><a href="goodsForm">상품 추가</a></li>
+	<li><a href="goodsIpgoList">상품 입고 현황</a></li>
+	<li><a href="goodsOderList">상품 주문 관리</a></li>
+</ul>
+	<table width="900" align="center">
+		<tr>
+			<td>주문번호</td>
+			<td>상품명</td>
+			<td>주문상태</td>
+			<td>주문내용</td>
+		</tr>
+		<th:block th:each="purchaseCommand:${dtos}">
+			<tr>
+				<td>[[${purchaseCommand.purchaseNum}]]</td>
+				<td>[[${purchaseCommand.purchaseName}]]</td>
+				<td th:if="${purchaseCommand.purchaseStatus == '주문완료'}">
+					<a th:href="|/order/orderOk?purchaseNum=${purchaseCommand.purchaseNum}|">[[${purchaseCommand.purchaseStatus}]]</a>
+				</td>
+				<td th:if="${purchaseCommand.purchaseStatus != '주문완료'}">
+		            	[[${purchaseCommand.purchaseStatus}]]
+		        </td>
+				<td>purchaseDetail</td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+</html>
