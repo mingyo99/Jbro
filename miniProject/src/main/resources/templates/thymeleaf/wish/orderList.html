@@ -95,7 +95,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 		            <td th:if="${purchaseCommand.purchaseStatus == '배송완료'}">
 		            	<a th:href="|/order/purchaseOk?purchaseNum=${purchaseCommand.purchaseNum}|">[[${purchaseCommand.purchaseStatus}]]</a>
 		            </td>
+		           
 		            <td>purchaseDetail</td>
+		             <td th:if="${purchaseCommand.purchaseStatus == '구매확정'}">
+		            	<button type="button" th:attr="onclick=|btnReview('${purchaseCommand.goodsNum}','${purchaseCommand.purchaseNum}');|">리뷰작성</button>
+		            </td>
 	            </tr>
 	            </th:block>
             </table>
@@ -124,6 +128,9 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 </div>
 
 <script>
+function btnReview(goodsNum, purchaseNum){
+	location.href='/review/goodsReview?goodsNum=' + goodsNum + "&purchaseNum=" + purchaseNum;
+}
 // Accordion 
 function myAccFunc() {
   var x = document.getElementById("demoAcc");

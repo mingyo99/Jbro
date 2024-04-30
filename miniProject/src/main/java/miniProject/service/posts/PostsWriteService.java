@@ -2,6 +2,7 @@ package miniProject.service.posts;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class PostsWriteService {
 		dto.setPostsNum(postsCommand.getPostsNum());
 		dto.setPostsStyle(postsCommand.getPostsStyle());
 		
+		
+		
+		
 		URL resource = getClass().getClassLoader().getResource("static/upload");
 		System.out.println(resource);
 		String filrDir = resource.getFile();
@@ -53,5 +57,11 @@ public class PostsWriteService {
 		dto.setPostsImg(storeTotal);
 		dto.setPostsImgImg(originalTotal);
 		postsMapper.postsInsert(dto);
+		
+		//상품저장
+		dto.setGoodsNums(postsCommand.getGoodsNums());
+		for(String goodsNum : dto.getGoodsNums()) {
+			postsMapper.postsGoodsInsert(dto.getPostsNum(), goodsNum);
+		}
 	}
 }

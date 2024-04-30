@@ -5,7 +5,7 @@
 <mapper namespace="miniProject.mapper.PurchaseMapper">
 
 <select id="purchaseSelectOne" resultType="goods">
-select goods_main_store goodsMainStore, goods_price goodsPrice, delivery_cost deliveryCost, goods_name goodsName
+select goods_Num goodsNum, goods_main_store goodsMainStore, goods_price goodsPrice, delivery_cost deliveryCost, goods_name goodsName
 from goods  
 where goods_Num = #{goodsNum}
 </select>
@@ -14,8 +14,10 @@ insert into Purchase (MEMBER_NUM, PURCHASE_NUM, DELIVERY_ADDR, DELIVERY_ADDR_DET
 values (#{memberNum}, #{purchaseNum}, #{deliveryAddr}, #{deliveryAddrDetail}, #{deliveryPost}, #{deliveryPhone}, #{message}, #{purchaseName}, #{deliveryName}, '주문완료', sysdate)
 </insert>
 <select id="purchaseSelect" resultType="purchase" parameterType="string">
-select purchase_Num purchaseNum, purchase_Name purchaseName, PURCHASE_STATUS purchaseStatus
-from purchase
+select p.purchase_Num purchaseNum, purchase_Name purchaseName, PURCHASE_STATUS purchaseStatus
+	 , GOODS_NUM goodsNum
+from purchase p join PURCHASE_LIST pl
+on p.PURCHASE_NUM = pl.PURCHASE_NUM
 <if test="memberNum != null">
 	where MEMBER_NUM = #{memberNum}
 </if>
@@ -25,4 +27,8 @@ from purchase
 	set PURCHASE_STATUS = #{status}
 	where PURCHASE_NUM = #{purchaseNum}
 </update>
+<insert id="purchaseListInsert" parameterType="purchaseList">
+	insert into PURCHASE_LIST(GOODS_NUM, PURCHASE_NUM, PURCHASE_QTY, TOTAL_PRICE)
+	values(#{goodsNum}, #{purchaseNum}, 1, #{goodsPrice})
+</insert>
 </mapper>

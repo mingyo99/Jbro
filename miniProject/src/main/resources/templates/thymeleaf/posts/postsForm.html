@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".btn").click(function(){
+		window.open("/shoppingmall/goodsSelect","상품검색","width=800, height=400, left=500, top=100");
+	});
+});
+</script>
 </head>
 <body>
 <form action="postsRegist" method="post" enctype="multipart/form-data" id="frm">
@@ -17,9 +24,14 @@
 				<option>3</option>
 				<option>4</option>
 			</select><br/>
-	상의: <button type="button" class="btn">상품 검색</button>
-	하의: <button type="button" class="btn">상품 검색</button>
-	신발: <button type="button" class="btn">상품 검색</button>
+	<button type="button" class="btn">상품 검색</button><br/>
+	<input type="hidden" id="goods1" name="goodsNums[0]" readonly>
+    <input type="hidden" id="goods2" name="goodsNums[1]" readonly>
+    <input type="hidden" id="goods3" name="goodsNums[2]" readonly>
+	상의: <img id="goodsMainStore1" width="50"/><input type="text" id="goodsName1" readonly><br/>
+    하의: <img id="goodsMainStore2" width="50"/><input type="text" id="goodsName2" readonly><br/>
+    신발: <img id="goodsMainStore3" width="50"/><input type="text" id="goodsName3" readonly><br/>
+		
 	<input type="submit" value="등록"/>
 </form>
 </body>

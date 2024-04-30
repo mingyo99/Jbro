@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 import miniProject.command.PurchaseCommand;
+import miniProject.domain.PurchaseListDTO;
 import miniProject.service.purchase.PurchaseListService;
 import miniProject.service.purchase.PurchaseWriteService;
 
@@ -25,8 +26,8 @@ public class PurchaseController {
 	@Autowired
 	PurchaseWriteService purchaseWriteService;
 	@PostMapping("order")
-	public String order(PurchaseCommand command,HttpSession session) {
-		purchaseWriteService.execute(command, session);
+	public String order(PurchaseCommand command,HttpSession session, PurchaseListDTO plDto) {
+		purchaseWriteService.execute(command, session, plDto);
 		return "redirect:/wish/wishList";
 	}
 }

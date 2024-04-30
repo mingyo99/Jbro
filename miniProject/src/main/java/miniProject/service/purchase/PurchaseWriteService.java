@@ -8,6 +8,7 @@ import miniProject.command.PurchaseCommand;
 import miniProject.domain.AuthInfoDTO;
 import miniProject.domain.MemberDTO;
 import miniProject.domain.PurchaseDTO;
+import miniProject.domain.PurchaseListDTO;
 import miniProject.mapper.AutoMapper;
 import miniProject.mapper.MemberMapper;
 import miniProject.mapper.PurchaseMapper;
@@ -20,7 +21,7 @@ public class PurchaseWriteService {
 	MemberMapper memberMapper;
 	@Autowired
 	AutoMapper autoMapper;
-	public void execute(PurchaseCommand command, HttpSession session) {
+	public void execute(PurchaseCommand command, HttpSession session, PurchaseListDTO plDto) {
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
 		MemberDTO memDto = memberMapper.memberSelectOne(auth.getUserId());
 		
@@ -29,7 +30,6 @@ public class PurchaseWriteService {
 		
 		dto.setPurchaseNum(purchaseNum);
 		dto.setPurchaseName(command.getPurchaseName());
-		System.out.println(command.getPurchaseName());
 		dto.setDeliveryAddr(command.getDeliveryAddr());
 		dto.setDeliveryAddrDetail(command.getDeliveryAddrDetail());
 		dto.setDeliveryPost(command.getDeliveryPost());
@@ -37,7 +37,8 @@ public class PurchaseWriteService {
 		dto.setMessage(command.getMessage());
 		dto.setDeliveryName(command.getDeliveryName());
 		dto.setMemberNum(memDto.getMemberNum());
-		
 		purchaseMapper.purchaseInsert(dto);
+		plDto.setPurchaseNum(dto.getPurchaseNum());
+		purchaseMapper.purchaseListInsert(plDto);
 	}
 }

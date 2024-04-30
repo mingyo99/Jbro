@@ -1,0 +1,23 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//En" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="miniProject.mapper.ReviewMapper">
+<insert id="reviewInsertUpdate" parameterType="review">
+	merge into REVIEWS r
+	using (select * from PURCHASE_LIST where GOODS_NUM = #{goodsNum} and PURCHASE_NUM = #{purchaseNum}) pl
+	on (r.GOODS_NUM = pl.GOODS_NUM and r.PURCHASE_NUM = pl.PURCHASE_NUM)
+	WHEN MATCHED THEN
+	update set REVIEW_CONTENT = #{reviewContent}
+	WHEN NOT MATCHED THEN
+	insert (GOODS_NUM, PURCHASE_NUM, REVIEW_DATE, REVIEW_CONTENT, MEMBER_ID, SCORE)
+	values( #{goodsNum}, #{purchaseNum}, sysdate,  #{reviewContent}, #{memberId}, 5)
+</insert>
+<select id="reviewSelectOne" parameterType="review" resultType="string">
+	select REVIEW_CONTENT
+	from REVIEWS
+	where GOODS_NUM = #{goodsNum} and PURCHASE_NUM = #{purchaseNum}
+</select>
+<select id="goodsReviewList" parameterType="string" resultType="review">
+	select PURCHASE_NUM purchaseNum, REVIEW_DATE reviewDate, REVIEW_CONTENT reviewContent, MEMBER_ID memberId
+	from REVIEWS
+	where GOODS_NUM = #{goodsNum}
+</select>
+</mapper>

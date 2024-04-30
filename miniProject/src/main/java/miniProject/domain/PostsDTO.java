@@ -1,10 +1,13 @@
 package miniProject.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 @Data
 @Alias("posts")
 public class PostsDTO {
@@ -17,6 +20,9 @@ public class PostsDTO {
 	String postsStyle;
 	
 	String memberId;
-	
+	List<String> goodsNums;
+	String goodsNum;
+	String goodsName;
+	String goodsMainStore;
 	
 }

@@ -32,6 +32,10 @@ public class PostsDetailService {
 		PostsDTO dto = postsMapper.postsSelectOne(postsNum);
 		model.addAttribute("postsCommand", dto);
 		
+		List<PostsDTO> plist = postsMapper.postsGoodsSelect(postsNum); 
+		System.out.println(plist);
+		model.addAttribute("plist", plist);
+		
 		MemberDTO memDto = memberMapper.memberSelectOne(memberNum);
 		model.addAttribute("memberCommand", memDto);
 		

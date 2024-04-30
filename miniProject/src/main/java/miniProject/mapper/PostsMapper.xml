@@ -53,4 +53,15 @@
 	set POSTS_LIKE = POSTS_LIKE - 1
 	where POSTS_NUM = #{postsNum}
 </update>
+<insert id="postsGoodsInsert" parameterType="posts">
+	insert into POSTSGOODS (POSTS_NUM, GOODS_NUM)
+	values(#{postsNum}, #{goodsNum})
+</insert>
+<select id="postsGoodsSelect" parameterType="string" resultType="posts">
+	select POSTS_NUM postsNum, pg.GOODS_NUM goodsNum 
+		 , GOODS_NAME goodsName, GOODS_MAIN_STORE goodsMainStore
+	from POSTSGOODS pg join GOODS g
+	on pg.GOODS_NUM = g.GOODS_NUM 
+	where POSTS_NUM = #{postsNum}
+</select>
 </mapper>

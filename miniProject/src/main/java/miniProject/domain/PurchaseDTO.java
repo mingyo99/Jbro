@@ -21,4 +21,6 @@ public class PurchaseDTO {
 	String memberNum;
 	String deliveryName;
 	String purchaseName;
+	
+	String goodsNum;
 }

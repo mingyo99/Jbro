@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <title>J_BRO</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript">
 $(function(){
 	$("#frm").submit(function(event){
@@ -57,20 +62,113 @@ $(function(){
 	});
 });
 </script>
+<style type="text/css">
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+.box {
+    width: 50px;
+    height: 50px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
 </head>
-<body>
+<body class="w3-content" style="max-width:1200px">
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+  <div class="w3-container w3-display-container w3-padding-16">
+    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+    <h3 class="w3-wide"><b>MINI-PROJECT</b></h3>
+  </div>
+  <!-- 왼쪽 카테고리바 -->
+  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+    <th:block th:if="${session.auth == null}">
+    	<a href="/login/login" class="w3-bar-item w3-button">로그인</a>
+    </th:block>
+    <th:block th:if="${session.auth != null}">
+    	<a href="/login/logout">로그아웃</a>
+    </th:block>
+	    <a href="/" class="w3-bar-item w3-button">홈</a>
+	    <a href="" class="w3-bar-item w3-button">검색</a>
+	    <a href="/shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
+	<th:block th:if="${session.auth != null && session.auth.grade == 'emp'}">
+		<a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+          관리 <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+          <a href="/member/memberList" class="w3-bar-item w3-button">회원 및 직원관리</a>
+          <a href="#" class="w3-bar-item w3-button">문의 관리</a>
+          <a href="#" class="w3-bar-item w3-button">배송 관리</a>
+        </div>
+        <a href="#" class="w3-bar-item w3-button">설정</a>
+	</th:block>
+	<th:block th:if="${session.auth != null && session.auth.grade == 'mem'}">
+		<a th:href="|/posts/postsList?memberId=${session.auth.userId}|" class="w3-bar-item w3-button">프로필</a>
+        <a href="#" class="w3-bar-item w3-button">설정</a>
+        <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+          더보기 <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+          <a href="#" class="w3-bar-item w3-button">찜한상품</a>
+          <a href="#" class="w3-bar-item w3-button">장바구니</a>
+          <a href="#" class="w3-bar-item w3-button">주문내역</a>
+        </div>
+	</th:block>
+  </div>
+  <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
+  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
+  <a href="#footer"  class="w3-bar-item w3-button w3-padding">Subscribe</a>
+</nav>
+<!-- Top menu on small screens -->
+<!-- 상단바 -->
+<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+  <div class="w3-bar-item w3-padding-24 w3-wide">상단바</div>
+  <!-- 상단바오른쪽버튼 -->
+  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+</header>
+
+<!-- 작은 화면에서 사이드바를 열 때 오버레이 효과 -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !페이지 콘텐츠! -->
+<div class="w3-main" style="margin-left:250px">
+
+  <!-- 작은 화면에서 콘텐츠 푸시다운 -->
+  <div class="w3-hide-large" style="margin-top:83px"></div>
+
 	<a th:href="|postsList?memberId=${memberCommand.memberId}|">
-		<img th:src="|/static/upload/${memberCommand.profileImg}|" width="50"/>
- 		[[${memberCommand.memberId}]]<br/>
+	<div style="display: inline-block;">
+		<div class="box" style="background: #BDBDBD;">
+			<img class="profile" th:src="|/static/upload/${memberCommand.profileImg}|" />
+		</div>
+		<div>
+			[[${memberCommand.memberId}]]
+		</div>		
+	</div>
  	</a>
- 	<th:block th:each="image : ${#strings.arraySplit(postsCommand.postsImg, '/')}">
- 		<img th:src="|/static/upload/${image}|" style="width:30vh;height:40vh"><br/>
- 	</th:block>
- 	<img th:if="${like == 1}" src="/static/images/hrt1.jpg" id="like" width="20"/>
- 	<img th:if="${like != 1}" src="/static/images/hrt.jpg" id="like" width="20"/>
- 	<span id="allLikeCount">[[${allLikeCount}]]</span><br/>
- 	내용 : [[${postsCommand.postsContent}]]<br/>
- 	스타일 : [[${postsCommand.postsStyle}]]<br/>
+ 	<div>
+	 	<th:block th:each="image : ${#strings.arraySplit(postsCommand.postsImg, '/')}">
+	 		<img th:src="|/static/upload/${image}|" style="width:30vh;height:40vh"><br/>
+	 	</th:block>
+	 	<img th:if="${like == 1}" src="/static/images/hrt1.jpg" id="like" width="20"/>
+	 	<img th:if="${like != 1}" src="/static/images/hrt.jpg" id="like" width="20"/>
+	 	<span id="allLikeCount">[[${allLikeCount}]]</span><br/>
+	 	내용 : [[${postsCommand.postsContent}]]<br/>
+	 	스타일 : [[${postsCommand.postsStyle}]]<br/>
+ 	</div>
+ 	<th:block th:each="goods :${plist}">
+ 		<div style="display: inline-block;">
+ 			<a th:href="|/shoppingmall/goodsSebu?goodsNum=${goods.goodsNum}|">
+ 				<img th:src="|/static/upload/${goods.goodsMainStore}|" width="80"/><br/>
+ 				[[${goods.goodsName}]]
+ 			</a>
+ 		</div>
+ 	</th:block><br/>
  	<th:block th:if="${session.auth != null}">
  		<th:block th:if="${postsCommand.memberNum == memberNum }">
  			<a th:href="@{postsUpdate(postsNum=${postsCommand.postsNum })}|">게시물 수정</a> | 
@@ -87,7 +185,10 @@ $(function(){
 	<th:block th:each="CommentCommand : ${list}">
 		<div>
 			<a th:href="|postsList?memberId=${CommentCommand.MEMBERID}|">
-				<img th:if="${CommentCommand.PROFILEIMG != null}" th:src="|/static/upload/${CommentCommand.PROFILEIMG}|" width="50"/>[[${CommentCommand.MEMBERID}]]
+				<div class="box" style="background: #BDBDBD;">
+					<img th:if="${CommentCommand.PROFILEIMG != null}" th:src="|/static/upload/${CommentCommand.PROFILEIMG}|" width="50"/>
+				</div>
+				[[${CommentCommand.MEMBERID}]]
 			</a> 
 			<span th:utext="${#strings.replace(CommentCommand.COMMENTSCONTENT, newLine,'&lt;br /&gt;')}"></span>
 			

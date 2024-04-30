@@ -3,6 +3,7 @@ package miniProject.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import miniProject.domain.CategoryDTO;
 import miniProject.domain.PostsDTO;
@@ -17,4 +18,6 @@ public interface PostsMapper {
 	public List<PostsDTO> postsAllSelectList(CategoryDTO dto);
 	public void likeAdd(String purchaseNum);
 	public void likeDel(String purchaseNum);
+	public void postsGoodsInsert(@Param("postsNum") String postsNum, @Param("goodsNum") String goodsNum);
+	public List<PostsDTO> postsGoodsSelect(String postsNum);
 }

@@ -1,10 +1,15 @@
 package miniProject.service.member;
 
+import java.io.File;
+import java.net.URL;
+import java.util.UUID;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import miniProject.command.MemberCommand;
 import miniProject.domain.MemberDTO;
@@ -34,6 +39,8 @@ public class MemberWriteService {
 		dto.setMemberPost(memberCommand.getMemberPost());
 		dto.setWeight(memberCommand.getWeight());
 		dto.setMemberPw(passwordEncoder.encode(memberPw));
+		
+		
 		memberMapper.memberInsert(dto);
 	}
 }

@@ -117,6 +117,8 @@ $(function(){
       <div class="w3-container">
           <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:30vh;height:40vh">
           <form action="/purchase/order" method="post">
+          <input type="hidden" name="goodsNum" th:value="${goodsCommand.goodsNum }"/>
+          <input type="hidden" name="goodsPrice" th:value="${goodsCommand.goodsPrice }"/>
           <p>상품명 : <b><input type = "hidden" name="purchaseName" th:value="${goodsCommand.goodsName }"/> [[${goodsCommand.goodsName }]]</b>
              상품가격 : <b>[[${goodsCommand.goodsPrice }]]원</b>
              배송비 : <b>[[${goodsCommand.deliveryCost }]]원</b></p>

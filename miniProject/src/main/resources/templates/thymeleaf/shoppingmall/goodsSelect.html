@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script> 
+<script type="text/javascript">
+var count = 0;
+function goodsSelect(goodsNum, goodsName, goodsMainStore) {
+    var goodsNums = $(opener.document).find("#goods" + (count + 1));
+    goodsNums.val(goodsNum);
+    
+    var goodsNames = $(opener.document).find("#goodsName" + (count + 1));
+    goodsNames.val(goodsName);
+    
+    var goodsMainStores = $(opener.document).find("#goodsMainStore" + (count + 1));
+    goodsMainStores.attr("src", "/static/upload/" + goodsMainStore);
+    
+    count++;
+    if (count >= 3) {
+        window.self.close();
+    }
+}
+</script>
+</head>
+<style>
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+</style>
+</head>
+<body class="w3-content" style="max-width:1200px">
+
+<div class="w3-row">
+   <th:block th:each="goodsCommand, idx : ${list}">
+    <div class="w3-col l3 s6">
+      <div class="w3-container" >
+        <a th:href="|javascript:goodsSelect('${goodsCommand.goodsNum}','${goodsCommand.goodsName}','${goodsCommand.goodsMainStore}');|">
+        <img th:src="|/static/upload/${goodsCommand.goodsMainStore}|" style="width:30vh;height:40vh"></a>
+        <p>[[${goodsCommand.goodsName}]]</p>
+      </div>
+    </div>
+  	<th:block th:if="${idx.count % 3 == 0}" th:utext="'</div><div>'" />
+    </th:block>
+  </div>
+</body>
+</html>

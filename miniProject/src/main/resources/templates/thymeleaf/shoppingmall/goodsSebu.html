@@ -127,14 +127,25 @@ $(function(){
 	   	      <th:block th:each="image : ${#strings.arraySplit(goodsCommand.goodsImages,'/')}">
 		        <img th:src="@{'/static/upload/'+${image}}" style="width:60vh; height:80vh"/>
 		      </th:block>
-          <br>
-		  <a href="javascript:history.back();">뒤로가기</a>		
-		
+          <br>	
 		</th:block>
       </div>
     </div>
   </div>
- 
+  후기
+ <table border="1">
+	<th:block th:each="dto : ${list}">
+		<tr>
+			<th>[[${dto.memberId}]] | [[${dto.purchaseNum}]]</th>
+			<th>[[${#dates.format(dto.reviewDate, 'yyyy-MM-dd')}]]</th>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span th:utext="${#strings.replace(dto.reviewContent, newLineChar, '&lt;br/ &gt;')}"></span>
+			</td>
+		</tr>
+	</th:block>
+</table>	
 </div>
 
 <!-- Newsletter Modal -->

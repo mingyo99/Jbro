@@ -25,5 +25,6 @@ public class PostsListService {
 		MemberDTO dto = memberMapper.memberSelectOne(memberId);
 		List<PostsDTO> list = postsMapper.postsSelectList(dto.getMemberNum());
 		model.addAttribute("list", list);
+		model.addAttribute("memberCommand", dto);
 	}
 }

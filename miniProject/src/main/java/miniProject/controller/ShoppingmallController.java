@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 import miniProject.service.goods.GoodsDetailService;
+import miniProject.service.review.ReviewSelectListService;
 import miniProject.service.shoppingmall.ShoppingmallGoodsListService;
 
 @Controller
@@ -20,11 +21,19 @@ public class ShoppingmallController {
 		shoppingmallGoodsListService.execute(model);
 		return "thymeleaf/shoppingmall/shoppingmall";
 	}
+	@GetMapping("goodsSelect")
+	public String goodsSelect(Model model) {
+		shoppingmallGoodsListService.execute(model);
+		return "thymeleaf/shoppingmall/goodsSelect";
+	}
 	@Autowired
 	GoodsDetailService goodsDetailService;
+	@Autowired
+	ReviewSelectListService reviewSelectListService;
 	@GetMapping("goodsSebu")
 	public String goodsSebu(String goodsNum, Model model, HttpSession session) {
 		goodsDetailService.execute(goodsNum, model, session);
+		reviewSelectListService.execute(goodsNum, model);
 		return "thymeleaf/shoppingmall/goodsSebu";
 	}
 	@GetMapping("top")

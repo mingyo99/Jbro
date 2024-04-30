@@ -1,6 +1,7 @@
 package miniProject.command;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,4 +15,5 @@ public class PostsCommand {
 	String postsContent;
 	Date postsdate;
 	String postsStyle;
+	List<String> goodsNums;
 }
