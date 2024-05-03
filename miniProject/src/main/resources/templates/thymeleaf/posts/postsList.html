@@ -9,31 +9,19 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-.w3-sidebar a {font-family: "Roboto", sans-serif}
-body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
-.box {
-    width: 150px;
-    height: 150px; 
-    border-radius: 70%;
-    overflow: hidden;
-}
-.profile {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-</style>
+<link rel="stylesheet" href="/static/css/sideBar.css">
+<link rel="stylesheet" href="/static/css/postListCss.css">
+
 </head>
 <body class="w3-content" style="max-width:1200px">
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top"id="mySidebar">
   <div class="w3-container w3-display-container w3-padding-16">
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
     <h3 class="w3-wide"><b>MINI-PROJECT</b></h3>
   </div>
   <!-- 왼쪽 카테고리바 -->
-  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+  <div class="w3-padding-64 w3-large w3-text-grey" id="mySidebarContent">
     <th:block th:if="${session.auth == null}">
     	<a href="/login/login" class="w3-bar-item w3-button">로그인</a>
     </th:block>
@@ -41,7 +29,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     	<a href="/login/logout">로그아웃</a>
     </th:block>
 	    <a href="/" class="w3-bar-item w3-button">홈</a>
-	    <a href="" class="w3-bar-item w3-button">검색</a>
 	    <a href="/shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
 	<th:block th:if="${session.auth != null && session.auth.grade == 'emp'}">
 		<a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
@@ -49,14 +36,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         </a>
         <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
           <a href="/member/memberList" class="w3-bar-item w3-button">회원 및 직원관리</a>
-          <a href="#" class="w3-bar-item w3-button">문의 관리</a>
-          <a href="#" class="w3-bar-item w3-button">배송 관리</a>
+          <a href="/goods/goodsOderList" class="w3-bar-item w3-button">배송 관리</a>
         </div>
-        <a href="#" class="w3-bar-item w3-button">설정</a>
 	</th:block>
 	<th:block th:if="${session.auth != null && session.auth.grade == 'mem'}">
 		<a th:href="|/posts/postsList?memberId=${session.auth.userId}|" class="w3-bar-item w3-button">프로필</a>
-        <a href="#" class="w3-bar-item w3-button">설정</a>
         <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
           더보기 <i class="fa fa-caret-down"></i>
         </a>
@@ -84,31 +68,33 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 <!-- !페이지 콘텐츠! -->
 <div class="w3-main" style="margin-left:250px">
-
   <!-- 작은 화면에서 콘텐츠 푸시다운 -->
   <div class="w3-hide-large" style="margin-top:83px"></div>
 
 <!-- 상품 나열 그리드 -->
-<th:block th:if="${session.auth != null0 && session.auth.userId == memberId}">
-	<button type="button" onclick="location.href='postsWrite'">글 작성</button>
-	<button type="button" th:attr="onclick=|javascript:location.href='/member/memberUpdate?memberNum=${session.auth.userId}'|">프로필 수정</button>
-</th:block>
-		<div class="box" style="background: #BDBDBD;">
-			<img class="profile" th:src="|/static/upload/${memberCommand.profileImg}|" />
-		</div>
-		<p>[[${memberCommand.memberId}]]</p>
-  <div class="w3-row">
-   <th:block th:each="postsCommand, idx : ${list}">
-    <div class="w3-col l3 s6">
-      <div class="w3-container" >
-        <a th:href="|postsDetail?postsNum=${postsCommand.postsNum}&memberNum=${postsCommand.memberNum}|">
-        <img th:src="|/static/upload/${#strings.arraySplit(postsCommand.postsImg, '/')[0]}|" style="width:30vh;height:40vh"></a>
-        <p>[[${postsCommand.memberNum}]]</p>
-      </div>
+<div class="profile-container">
+    <div class="profile-header">
+        <img class="profile-picture" th:src="|/static/upload/${memberCommand.profileImg}|">
+		<p class="profile-username">[[${memberCommand.memberId}]]</p>
+		<th:block th:if="${session.auth != null0 && session.auth.userId == memberId}">
+			<div class="profile-actions">
+	            <button type="button" class="edit-profile-btn" onclick="location.href='postsWrite'">글 작성</button>
+	            <button type="button" class="edit-profile-btn"  th:attr="onclick=|javascript:location.href='/member/memberUpdate?memberNum=${session.auth.userId}'|">프로필 수정</button>
+	        </div>
+        </th:block>
     </div>
-    <th:block th:if="${idx.count % 3 == 0}" th:utext="'</div><div>'" />
+	<div class="posts-grid">
+	<th:block th:each="postsCommand, idx : ${list}">
+		<div class="post" >
+    		<a th:href="|postsDetail?postsNum=${postsCommand.postsNum}&memberNum=${postsCommand.memberNum}|">
+        		<img th:src="|/static/upload/${#strings.arraySplit(postsCommand.postsImg, '/')[0]}|" style="width:30vh;height:40vh">
+        	</a>
+        	<p>[[${postsCommand.memberNum}]]</p>
+    	</div>
     </th:block>
-  </div>
+	</div>
+</div>   
+</div>
 </body>
 <script>
 // Accordion 

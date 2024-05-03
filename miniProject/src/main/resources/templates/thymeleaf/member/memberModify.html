@@ -2,34 +2,79 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>J_BRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="/static/js/check.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/static/js/daumAddressScript.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script> 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/memberForm.css">
+<link rel="stylesheet" href="/static/css/sideBar.css">
 </head>
+<body class="w3-content" style="max-width:1200px">
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top"  id="mySidebar">
+  <div class="w3-container w3-display-container w3-padding-16">
+    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+    <h3 class="w3-wide"><b>MINI-PROJECT</b></h3>
+  </div>
+  <!-- 왼쪽 카테고리바 -->
+  <div class="w3-padding-64 w3-large w3-text-grey" id="mySidebarContent">
+    <th:block th:if="${session.auth == null}">
+    	<a href="/login/login" class="w3-bar-item w3-button">로그인</a>
+    </th:block>
+    <th:block th:if="${session.auth != null}">
+    	<a href="/login/logout">로그아웃</a>
+    </th:block>
+	    <a href="/" class="w3-bar-item w3-button">홈</a>
+	    <a href="/shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
+	<th:block th:if="${session.auth != null && session.auth.grade == 'emp'}">
+		<a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+          관리 <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+          <a href="/member/memberList" class="w3-bar-item w3-button">회원 및 직원관리</a>
+          <a href="/goods/goodsOderList" class="w3-bar-item w3-button">배송 관리</a>
+        </div>
+	</th:block>
+	<th:block th:if="${session.auth != null && session.auth.grade == 'mem'}">
+		<a th:href="|/posts/postsList?memberId=${session.auth.userId}|" class="w3-bar-item w3-button">프로필</a>
+        <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+          더보기 <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+          <a href="/wish/wishList" class="w3-bar-item w3-button">찜한상품</a>
+          <a href="/order/orderList" class="w3-bar-item w3-button">주문내역</a>
+        </div>
+	</th:block>
+  </div>
+</nav>
 <body>
+<div class="w3-container w3-text-grey" align="center">
 <form action="memberUpdate" method="post" th:object="${memberCommand}" enctype="multipart/form-data" id="frm">
 <input type="hidden" name="memberNum" th:value="${memberCommand.memberNum}"/>
-	회원 등록 페이지<br/>
-	프로필 : <input type="file" name="profileImg" th:value="${memberCommand.profileImg}" /><br/>
-	회원아이디 : <input type="text" name="memberId" id="userId" th:value="${memberCommand.memberId}" />
+	프로필  <input type="file" name="profileImg" th:value="${memberCommand.profileImg}" /><br/>
+	아이디  <input type="text" name="memberId" id="userId" th:value="${memberCommand.memberId}" />
 	<span th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></span>
 	<span id="idCheck"></span><br/>
-	회원명 : <input type="text" name="memberName" th:value="${memberCommand.memberName}"/>
+	이름  <input type="text" name="memberName" th:value="${memberCommand.memberName}"/>
 	<span th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}"></span><br/>
-	회원주소 : <input type="text" name="memberAddr"id="sample4_roadAddress" th:value="${memberCommand.memberAddr}" onclick="execDaumPostcode()" readonly="readonly"/>
+	주소  <input type="text" name="memberAddr"id="sample4_roadAddress" th:value="${memberCommand.memberAddr}" onclick="execDaumPostcode()" readonly="readonly"/>
 	<span th:if="${#fields.hasErrors('memberAddr')}" th:errors="*{memberAddr}"></span><br/>
-	상세주소 : <input type="text" name="memberAddrDetail" th:value="${memberCommand.memberAddrDetail}" /><br/>
-	우편번호 : <input type="text" name="memberPost"  id="sample4_postcode" th:value="${memberCommand.memberPost}" readonly="readonly"/><br/>
-	회원연락처1 : <input type="tel" name="memberPhone1" th:value="${memberCommand.memberPhone1}"/>
+	주소  <input type="text" name="memberAddrDetail" th:value="${memberCommand.memberAddrDetail}" /><br/>
+	우편번호  <input type="text" name="memberPost"  id="sample4_postcode" th:value="${memberCommand.memberPost}" readonly="readonly"/><br/>
+	연락처1  <input type="tel" name="memberPhone1" th:value="${memberCommand.memberPhone1}"/>
 	<span th:if="${#fields.hasErrors('memberPhone1')}" th:errors="*{memberPhone1}"></span><br/>
-	회원연락처2 : <input type="tel" name="memberPhone2" th:value="${memberCommand.memberPhone2}"/><br/>
-	회원성별 : <input type="radio" name="gender" value="M"  th:checked="${memberCommand.gender == 'M'}"/>남자
+	연락처2  <input type="tel" name="memberPhone2" th:value="${memberCommand.memberPhone2}"/><br/>
+	성별  <input type="radio" name="gender" value="M"  th:checked="${memberCommand.gender == 'M'}"/>남자
 			 <input type="radio" name="gender" value="F" th:checked="${memberCommand.gender == 'F'}"/>여자<br/>
-	회원생년월일 : <input type="date" name="memberBirth" th:value="${#dates.format(memberCommand.memberBirth, 'yyyy-MM-dd')}" />
+	생년월일  <input type="date" name="memberBirth" th:value="${#dates.format(memberCommand.memberBirth, 'yyyy-MM-dd')}" />
 	<span th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}"></span><br/>
-	회원이메일 : <input type="email" name="memberEmail" id="userEmail" th:value="${memberCommand.memberEmail}" /><br/>
-	키:		<select name="height" >
+	이메일  <input type="email" name="memberEmail" id="userEmail" th:value="${memberCommand.memberEmail}" /><br/>
+	키		<select name="height" >
 				<option th:selected="${memberCommand.height == '~150cm'}">~150cm</option>
 				<option th:selected="${memberCommand.height == '150~157cm'}">150~157cm</option>
 				<option th:selected="${memberCommand.height == '155~162cm'}">155~162cm</option>
@@ -41,7 +86,7 @@
 				<option th:selected="${memberCommand.height == '185~192cm'}">185~192cm</option>
 				<option th:selected="${memberCommand.height == '192cm~'}">192cm~</option>
 			</select><br/>
-	몸무게:	<select name="weight" >
+	몸무게	<select name="weight" >
 				<option th:selected="${memberCommand.weight == '~45kg'}">~45kg</option>
 				<option th:selected="${memberCommand.weight == '45~50kg'}">45~50kg</option>
 				<option th:selected="${memberCommand.weight == '50~55kg'}">50~55kg</option>
@@ -56,5 +101,6 @@
 			</select><br/>
 	<input type="submit" value="회원수정"/>
 </form>
+</div>
 </body>
 </html>

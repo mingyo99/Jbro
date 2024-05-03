@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+/* 이미지 그리드 스타일 */
+.img-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.img-grid div {
+    flex-basis: 30%;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+}
+
+.img-grid img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 댓글 박스 스타일 */
+#content {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.comment-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-item div {
+    background: #f8f8f8;
+    padding: 8px 15px;
+    border-radius: 20px;
+    width: calc(100% - 60px);
+}
+
+/* 프로필 이미지 스타일 */
+.profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+/* 댓글 입력 박스 */
+input[type="text"], input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    cursor: pointer;
+}

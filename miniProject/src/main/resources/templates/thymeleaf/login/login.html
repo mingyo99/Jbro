@@ -8,51 +8,45 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-.w3-sidebar a {font-family: "Roboto", sans-serif}
-body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
-</style>
+<link rel="stylesheet" href="/static/css/sideBar.css">
 </head>
 <body class="w3-content" style="max-width:1200px">
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top"  id="mySidebar">
   <div class="w3-container w3-display-container w3-padding-16">
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
     <h3 class="w3-wide"><b>MINI-PROJECT</b></h3>
   </div>
   <!-- 왼쪽 카테고리바 -->
-  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+  <div class="w3-padding-64 w3-large w3-text-grey" id="mySidebarContent">
     <th:block th:if="${session.auth == null}">
-    <a href="login" class="w3-bar-item w3-button">로그인</a>
+    	<a href="/login/login" class="w3-bar-item w3-button">로그인</a>
     </th:block>
-    
     <th:block th:if="${session.auth != null}">
-	<a href="login/logout">로그아웃</a>
-	<th:block th:if="${session.auth.grade == 'emp'}">
-		<a href="member/memberList">회원 정보</a>
+    	<a href="/login/logout">로그아웃</a>
+    </th:block>
+	    <a href="/" class="w3-bar-item w3-button">홈</a>
+	    <a href="/shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
+	<th:block th:if="${session.auth != null && session.auth.grade == 'emp'}">
+		<a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+          관리 <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+          <a href="/member/memberList" class="w3-bar-item w3-button">회원 및 직원관리</a>
+          <a href="/goods/goodsOderList" class="w3-bar-item w3-button">배송 관리</a>
+        </div>
 	</th:block>
-	<th:block th:if="${session.auth.grade == 'mem'}">
-		<a href="member/memberList">프로필</a>
+	<th:block th:if="${session.auth != null && session.auth.grade == 'mem'}">
+		<a th:href="|/posts/postsList?memberId=${session.auth.userId}|" class="w3-bar-item w3-button">프로필</a>
+        <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+          더보기 <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+          <a href="/wish/wishList" class="w3-bar-item w3-button">찜한상품</a>
+          <a href="/order/orderList" class="w3-bar-item w3-button">주문내역</a>
+        </div>
 	</th:block>
-</th:block>
-
-    <a href="" class="w3-bar-item w3-button">홈</a>
-    <a href="" class="w3-bar-item w3-button">검색</a>
-    <a href="/shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">쇼핑몰</a>
-    <a href="#" class="w3-bar-item w3-button">프로필</a>
-    <a href="#" class="w3-bar-item w3-button">설정</a>
-    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      더보기 <i class="fa fa-caret-down"></i>
-    </a>
-    <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button">찜한상품</a>
-      <a href="#" class="w3-bar-item w3-button">장바구니</a>
-      <a href="#" class="w3-bar-item w3-button">주문내역</a>
-    </div>
   </div>
-  <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
-  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
-  <a href="#footer"  class="w3-bar-item w3-button w3-padding">Subscribe</a>
 </nav>
 
 <!-- Top menu on small screens -->

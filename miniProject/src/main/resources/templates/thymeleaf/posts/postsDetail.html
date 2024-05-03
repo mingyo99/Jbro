@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/postCss.css">
+<link rel="stylesheet" href="/static/css/sideBar.css">
 <script type="text/javascript">
 $(function(){
 	$("#frm").submit(function(event){
@@ -24,10 +26,22 @@ $(function(){
 			success: function(result){
 				console.log(result);
 				$("#content").empty();
-				result.forEach(function (result) {
-	                $('#content').append("<div><a href='postsList?memberId=" + result.MEMBERID + "'><img if='" + result.PROFILEIMG + "!= null}' src='/static/upload/"+ result.PROFILEIMG + "' width='50'/>" + result.MEMBERID +'</a>'+ result.COMMENTSCONTENT + '</div>');
-	           
-	            });
+				result.forEach(function (comment) {
+			        var newLineReplacedCommentContent = comment.COMMENTSCONTENT.replace(/\n/g, '<br/>');
+			        var profileImageSrc = comment.PROFILEIMG != null ? '/static/upload/' + comment.PROFILEIMG : ''; // 프로필 이미지가 없는 경우를 대비한 처리
+			        var commentItemHtml = 
+			            "<div class='comment-item'>" +
+			                "<a href='postsList?memberId=" + comment.MEMBERID + "'>" +
+			                    "<img src='" + profileImageSrc + "' alt='Profile Image' width='50'>" +
+			                "</a>" +
+			                "<div>" +
+			                    "<strong>" + comment.MEMBERID + "</strong>" +
+			                    "<span> "+ newLineReplacedCommentContent + "</span>" +
+			                "</div>" +
+			            "</div>";
+
+			        $('#content').append(commentItemHtml);
+			    });
 				$("#comment").val("");
 			},
 			error:function(){
@@ -62,31 +76,16 @@ $(function(){
 	});
 });
 </script>
-<style type="text/css">
-.w3-sidebar a {font-family: "Roboto", sans-serif}
-body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
-.box {
-    width: 50px;
-    height: 50px; 
-    border-radius: 70%;
-    overflow: hidden;
-}
-.profile {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-</style>
 </head>
 <body class="w3-content" style="max-width:1200px">
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
-  <div class="w3-container w3-display-container w3-padding-16">
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" id="mySidebar">
+  <div class="w3-container w3-display-container w3-padding-16" >
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
     <h3 class="w3-wide"><b>MINI-PROJECT</b></h3>
   </div>
   <!-- 왼쪽 카테고리바 -->
-  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+  <div class="w3-padding-64 w3-large w3-text-grey" id="mySidebarContent">
     <th:block th:if="${session.auth == null}">
     	<a href="/login/login" class="w3-bar-item w3-button">로그인</a>
     </th:block>
@@ -120,9 +119,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
         </div>
 	</th:block>
   </div>
-  <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
-  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
-  <a href="#footer"  class="w3-bar-item w3-button w3-padding">Subscribe</a>
 </nav>
 <!-- Top menu on small screens -->
 <!-- 상단바 -->
@@ -143,18 +139,22 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 
 	<a th:href="|postsList?memberId=${memberCommand.memberId}|">
 	<div style="display: inline-block;">
-		<div class="box" style="background: #BDBDBD;">
+		<div class="box">
 			<img class="profile" th:src="|/static/upload/${memberCommand.profileImg}|" />
 		</div>
 		<div>
-			[[${memberCommand.memberId}]]
+			 <strong>[[${memberCommand.memberId}]]</strong>
 		</div>		
 	</div>
  	</a>
  	<div>
-	 	<th:block th:each="image : ${#strings.arraySplit(postsCommand.postsImg, '/')}">
-	 		<img th:src="|/static/upload/${image}|" style="width:30vh;height:40vh"><br/>
-	 	</th:block>
+	 	<div class="img-grid">
+    <th:block th:each="image : ${#strings.arraySplit(postsCommand.postsImg, '/')}">
+        <div>
+            <img th:src="|/static/upload/${image}|" alt="Post Image">
+        </div>
+    </th:block>
+</div>
 	 	<img th:if="${like == 1}" src="/static/images/hrt1.jpg" id="like" width="20"/>
 	 	<img th:if="${like != 1}" src="/static/images/hrt.jpg" id="like" width="20"/>
 	 	<span id="allLikeCount">[[${allLikeCount}]]</span><br/>
@@ -180,25 +180,22 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	</th:block><br/>
 	
 	<!-- Comment -->
-	<div id="content" >
-	
-	<th:block th:each="CommentCommand : ${list}">
-		<div>
-			<a th:href="|postsList?memberId=${CommentCommand.MEMBERID}|">
-				<div class="box" style="background: #BDBDBD;">
-					<img th:if="${CommentCommand.PROFILEIMG != null}" th:src="|/static/upload/${CommentCommand.PROFILEIMG}|" width="50"/>
-				</div>
-				[[${CommentCommand.MEMBERID}]]
-			</a> 
-			<span th:utext="${#strings.replace(CommentCommand.COMMENTSCONTENT, newLine,'&lt;br /&gt;')}"></span>
-			
-			
-		</div>
-	</th:block>
-	</div>
+	<div id="content">
+    <th:block th:each="CommentCommand : ${list}">
+        <div class="comment-item">
+            <a th:href="|postsList?memberId=${CommentCommand.MEMBERID}|">
+                <img th:src="|/static/upload/${CommentCommand.PROFILEIMG}|" alt="Profile Image">
+            </a>
+            <div>
+                <strong th:text="${CommentCommand.MEMBERID}"></strong>
+                <span th:utext="${#strings.replace(CommentCommand.COMMENTSCONTENT, newLine,'<br/>')}"></span>
+            </div>
+        </div>
+    </th:block>
+</div>
 	<th:block th:if="${session.auth != null}">
 		<form id="frm">
-			<textarea rows="10" cols="50"  id="comment" name="comment" placeholder="댓글 달기.." required="required"></textarea>
+			<input type="text"  id="comment" name="comment" placeholder="댓글 달기.." required="required"/>
 			<input type="submit" value="게시">
 		</form>
 	</th:block>

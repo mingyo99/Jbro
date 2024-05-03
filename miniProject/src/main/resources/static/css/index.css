@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+/* 입력 필드 스타일 */
+input[type="text"], select, input[type="submit"] {
+    padding: 8px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color: #FFFFFF; /* 흰색 배경 */
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #B2DFFC; /* 포커스 시 경계선 색상 */
+}
+
+/* 사이드바 및 헤더 스타일 */
+.w3-sidebar .w3-bar-item:hover {
+    background: #F9F9F9; /* 호버시 연한 회색 배경 */
+}
+
+.w3-top, .w3-bar {
+    background-color: #FFFFFF; /* 흰색 배경 */
+}
+
+/* 반응형 디자인 */
+@media only screen and (max-width: 600px) {
+    .w3-sidebar.w3-collapse {
+        display: none;
+    }
+
+    .w3-main {
+        margin-left: 0;
+    }
+
+    header.w3-bar.w3-top {
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+    }
+}

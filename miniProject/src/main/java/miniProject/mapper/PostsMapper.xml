@@ -8,7 +8,7 @@
 	values(#{postsNum}, #{memberNum}, #{postsImg}, #{postsImgImg}, #{postsContent}, sysdate, #{postsStyle}, 0)
 </insert>
 <select id="postsSelectList" parameterType="string" resultType="posts">
-	select <include refid="postsBaseColumn"/> from POSTS where MEMBER_NUM = #{memberNum}
+	select <include refid="postsBaseColumn"/> from POSTS where MEMBER_NUM = #{memberNum} order by POSTS_DATE desc
 </select>
 <select id="postsSelectOne" parameterType="string" resultType="posts">
 	select <include refid="postsBaseColumn"/> from POSTS where POSTS_NUM = #{postsNum}
@@ -41,6 +41,9 @@
 	</trim>
 	<if test='orderBy != null and orderBy == "인기순"'>
 		order by POSTS_LIKE desc
+	</if>
+	<if test='orderBy != null and orderBy == "최신순"'>
+		order by POSTS_DATE desc
 	</if>
 </select>
 <update id="likeAdd" parameterType="string">
