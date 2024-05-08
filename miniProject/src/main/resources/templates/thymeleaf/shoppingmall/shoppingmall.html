@@ -36,23 +36,12 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <a href="/shoppingmall/shoppingmallMain" class="w3-bar-item w3-button">홈</a>
     <a href="/shoppingmall/top" class="w3-bar-item w3-button">상의</a>
     <a href="/shoppingmall/outer" class="w3-bar-item w3-button">아우터</a>
-    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      바지 <i class="fa fa-caret-down"></i>
-    </a>
-    <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="/shoppingmall/jeans" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>청바지</a>
-      <a href="/shoppingmall/slacks" class="w3-bar-item w3-button">슬렉스</a>
-      <a href="/shoppingmall/shorts" class="w3-bar-item w3-button">반바지</a>
-      <a href="/shoppingmall/trainingPants" class="w3-bar-item w3-button">트레이닝바지</a>
-    </div>
+    <a href="/shoppingmall/outer" class="w3-bar-item w3-button">바지</a>
     <a href="/shoppingmall/shoes" class="w3-bar-item w3-button">신발</a>
     <a href="/shoppingmall/sports" class="w3-bar-item w3-button">스포츠웨어</a>
     <a href="/shoppingmall/caps" class="w3-bar-item w3-button">모자</a>
     <a href="/shoppingmall/etc" class="w3-bar-item w3-button">양말/안경/악세서리</a>
   </div>
-  <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
-  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
-  <a href="#footer"  class="w3-bar-item w3-button w3-padding">Subscribe</a>
 </nav>
 
 <!-- Top menu on small screens -->
@@ -94,7 +83,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   </div>
 
   <div class="w3-container w3-text-grey" id="shopping">
-    <p>??? 개의 상품</p>
   </div>
   <!-- 상품 나열 그리드 -->
   <div class="w3-row">
@@ -109,11 +97,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   	<th:block th:if="${idx.count % 3 == 0}" th:utext="'</div><div>'" />
     </th:block>
   </div>
-
-  
-
-  <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">JBro</a></div>
-
   <!-- End page content -->
 </div>
 
